@@ -13,5 +13,6 @@
     <color name="colorSemiBlack">#383838</color>
     <color name="itemColorDefault">#5581F1</color>
     <color name="colorBottomSheetActionBar">#1c55ea</color>
+    <color name="darkTextColor">#242134</color>
 
 </resources>
