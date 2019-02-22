@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     package="com.appkwan.exertion">
 
     <application
@@ -8,19 +9,19 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/MyMaterialTheme">
-        <activity android:name=".feature.profile.ProfileActivity">
+        android:theme="@style/MyMaterialTheme"
+        tools:ignore="GoogleAppIndexingWarning">
+        <activity android:name=".feature.newpost.NewPostActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".feature.accountchoice.AccontChoiceActivity">
-
-        </activity>
+        <activity android:name=".feature.profile.ProfileActivity"/>
+        <activity android:name=".feature.accountchoice.AccontChoiceActivity"/>
         <activity android:name=".feature.signup.SignUpActivity" />
-        <activity android:name=".feature.login.LoginActivity"></activity>
+        <activity android:name=".feature.login.LoginActivity" />
     </application>
 
 </manifest>
