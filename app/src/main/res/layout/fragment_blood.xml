@@ -4,6 +4,16 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/colorPrimary"
-    tools:context=".feature.BloodFragment">
+    tools:context=".feature.BloodFragment"
+    >
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/mBloodRecyclerView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+       >
+
+    </android.support.v7.widget.RecyclerView>
 
 </FrameLayout>

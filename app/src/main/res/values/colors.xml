@@ -3,6 +3,7 @@
     <color name="colorPrimary">#43CB9B</color>
     <color name="colorPrimaryDark">#059F69</color>
     <color name="colorAccent">#FF2C13</color>
+    <color name="colorLessAccent">#F46B5B</color>
     <color name="colorWhite">#FFFFFF</color>
 
     <color name="colorAccountChoiceCard">#003DDB</color>
