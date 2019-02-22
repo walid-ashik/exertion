@@ -33,12 +33,12 @@
             android:orientation="vertical">
 
             <ImageView
-                android:id="@+id/imageView6"
+                android:id="@+id/mUserINfoProfile"
                 android:layout_width="60dp"
                 android:layout_height="60dp"
                 android:layout_marginStart="8dp"
-                android:layout_marginEnd="8dp"
                 android:layout_marginTop="20dp"
+                android:layout_marginEnd="8dp"
                 android:src="@drawable/ic_select_profile_image"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.498"
@@ -47,16 +47,16 @@
 
             <TextView
                 android:id="@+id/textView4"
-                android:layout_marginBottom="20dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
-                android:layout_marginEnd="8dp"
                 android:layout_marginTop="8dp"
+                android:layout_marginEnd="8dp"
+                android:layout_marginBottom="20dp"
                 android:text="Please provide your details"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/imageView6" />
+                app:layout_constraintTop_toBottomOf="@+id/mUserINfoProfile" />
 
             <EditText
                 android:id="@+id/register_company_person_name_edittext"
@@ -76,24 +76,24 @@
                 android:textColorHint="@color/colorHintEditText" />
 
 
-            <Spinner
+            <TextView
                 android:id="@+id/mSpinnerGender"
                 android:layout_width="match_parent"
                 android:layout_height="45dp"
                 android:layout_marginLeft="10dp"
+                android:text="Select Your Gender"
                 android:layout_marginTop="5dp"
                 android:layout_marginRight="10dp"
-                android:prompt="Select Your Gender"
+                android:textColor="@color/colorHintEditText"
                 android:background="@color/colorEditTextBG"
-                android:drawableLeft="@drawable/ic_briefcase"
+                android:drawableLeft="@drawable/ic_people"
                 android:drawablePadding="10dp"
                 android:gravity="center_vertical"
                 android:paddingLeft="10dp"
-                android:textColor="@color/colorAccent"
-                android:textColorHint="@color/colorHintEditText" />
+                />
 
             <EditText
-                android:id="@+id/register_company_person_designation_edittext"
+                android:id="@+id/mPresentAddress"
                 android:layout_width="match_parent"
                 android:layout_height="45dp"
                 android:layout_marginLeft="10dp"
@@ -111,7 +111,7 @@
 
 
             <EditText
-                android:id="@+id/register_company_location"
+                android:id="@+id/mPermanentAddress"
                 android:layout_width="match_parent"
                 android:layout_height="45dp"
                 android:layout_marginLeft="10dp"
@@ -129,7 +129,7 @@
 
 
             <EditText
-                android:id="@+id/register_company_phone_edittext"
+                android:id="@+id/mUserPhone"
                 android:layout_width="match_parent"
                 android:layout_height="45dp"
                 android:layout_marginLeft="10dp"
