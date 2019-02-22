@@ -2,6 +2,16 @@
 <resources>
     <color name="colorPrimary">#43CB9B</color>
     <color name="colorPrimaryDark">#059F69</color>
-    <color name="colorAccent">#141414</color>
+    <color name="colorAccent">#FF2C13</color>
     <color name="colorWhite">#FFFFFF</color>
+
+    <color name="colorAccountChoiceCard">#003DDB</color>
+    <color name="colorEditTextBG">#DFFFF4</color>
+    <color name="colorHintEditText">#D3D3D3</color>
+    <color name="warning">#ae3131</color>
+    <color name="colorTextInWhiteBG">#bfbfbf</color>
+    <color name="colorSemiBlack">#383838</color>
+    <color name="itemColorDefault">#5581F1</color>
+    <color name="colorBottomSheetActionBar">#1c55ea</color>
+
 </resources>

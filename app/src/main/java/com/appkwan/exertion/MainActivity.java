@@ -12,9 +12,6 @@ import android.support.v7.widget.Toolbar;
 import com.appkwan.exertion.feature.BloodFragment;
 import com.appkwan.exertion.feature.TutionFragment;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
