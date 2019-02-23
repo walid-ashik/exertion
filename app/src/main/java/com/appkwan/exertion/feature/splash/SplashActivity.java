@@ -5,6 +5,7 @@ import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
+import com.appkwan.exertion.feature.accountchoice.AccountChoiceActivity;
 import com.appkwan.exertion.feature.home.MainActivity;
 import com.appkwan.exertion.R;
 import com.appkwan.exertion.feature.login.LoginActivity;
@@ -32,8 +33,8 @@ public class SplashActivity extends AppCompatActivity implements SplashContract.
     }
 
     @Override
-    public void navigateToLoginActivity() {
-        startActivity(new Intent(this, LoginActivity.class));
+    public void navigateToAccountChoiceActivity() {
+        startActivity(new Intent(this, AccountChoiceActivity.class));
         finish();
         return;
     }

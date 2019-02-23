@@ -26,7 +26,7 @@
 
         <activity android:name=".feature.newpost.NewPostActivity"/>
         <activity android:name=".feature.profile.ProfileActivity" />
-        <activity android:name=".feature.accountchoice.AccontChoiceActivity" />
+        <activity android:name=".feature.accountchoice.AccountChoiceActivity" />
         <activity android:name=".feature.signup.SignUpActivity" />
         <activity android:name=".feature.login.LoginActivity" />
     </application>

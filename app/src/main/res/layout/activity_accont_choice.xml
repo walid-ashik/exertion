@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/colorPrimaryDark"
-    tools:context=".feature.accountchoice.AccontChoiceActivity">
+    tools:context=".feature.accountchoice.AccountChoiceActivity">
 
     <TextView
         android:id="@+id/textView6"
@@ -60,6 +60,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="45dp"
                 android:gravity="center"
+                android:clickable="true"
                 android:orientation="horizontal">
 
                 <ImageView
@@ -86,6 +87,7 @@
                 android:layout_height="45dp"
                 android:background="@color/colorPrimaryDark"
                 android:gravity="center"
+                android:clickable="true"
                 android:orientation="horizontal">
 
                 <ImageView

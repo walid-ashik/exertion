@@ -9,7 +9,7 @@ import com.appkwan.exertion.R;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class AccontChoiceActivity extends AppCompatActivity {
+public class AccountChoiceActivity extends AppCompatActivity {
 
     @BindView(R.id.mStudentLinearLayout)
     LinearLayout mStudentLinearLayout;

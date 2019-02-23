@@ -22,7 +22,7 @@ public class SignUpActivity extends AppCompatActivity {
     EditText mPassword;
     @BindView(R.id.mConfirmPassword)
     EditText mConfirmPassword;
-    @BindView(R.id.button)
+    @BindView(R.id.mLoginButton)
     Button mSignUpButton;
     @BindView(R.id.textView2)
     TextView textView2;

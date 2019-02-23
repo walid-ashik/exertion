@@ -80,14 +80,14 @@
         android:paddingLeft="10dp"
         android:textColor="@color/colorSemiBlack"
         android:textColorHint="@color/colorHintEditText"
-        app:layout_constraintBottom_toTopOf="@+id/button"
+        app:layout_constraintBottom_toTopOf="@+id/mLoginButton"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent" />
 
 
     <Button
-        android:id="@+id/button"
+        android:id="@+id/mLoginButton"
         android:layout_width="0dp"
         android:layout_height="47dp"
         android:layout_marginStart="24dp"
@@ -141,8 +141,8 @@
         android:textColor="@color/colorTextInWhiteBG"
         android:textSize="12sp"
         app:layout_constraintBottom_toTopOf="@+id/textView2"
-        app:layout_constraintStart_toStartOf="@+id/button"
-        app:layout_constraintTop_toBottomOf="@+id/button"
+        app:layout_constraintStart_toStartOf="@+id/mLoginButton"
+        app:layout_constraintTop_toBottomOf="@+id/mLoginButton"
         app:layout_constraintVertical_bias="0.0" />
 
 
@@ -170,7 +170,7 @@
         android:textColor="@color/colorPrimary"
         android:textSize="12sp"
         app:layout_constraintBottom_toBottomOf="@+id/textview_privacy_policy"
-        app:layout_constraintEnd_toEndOf="@+id/button"
+        app:layout_constraintEnd_toEndOf="@+id/mLoginButton"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toEndOf="@+id/textview_privacy_policy"
         app:layout_constraintTop_toTopOf="@+id/textview_privacy_policy"

@@ -1,6 +1,5 @@
 package com.appkwan.exertion.feature.splash;
 
-import android.app.Activity;
 import android.support.annotation.NonNull;
 
 import com.google.firebase.auth.FirebaseAuth;
@@ -23,7 +22,7 @@ public class SplashPresenter implements SplashContract.Presenter {
     @Override
     public void checkIfUserLoggedIn() {
         if(FirebaseAuth.getInstance().getCurrentUser() == null){
-            view.navigateToLoginActivity();
+            view.navigateToAccountChoiceActivity();
             return;
         }else{
             checkUserType();
@@ -34,7 +33,7 @@ public class SplashPresenter implements SplashContract.Presenter {
         String userId = FirebaseAuth.getInstance().getCurrentUser().getUid();
 
         if(userId == null){
-            view.navigateToLoginActivity();
+            view.navigateToAccountChoiceActivity();
             return;
         }else{
 
@@ -44,7 +43,7 @@ public class SplashPresenter implements SplashContract.Presenter {
                     if(dataSnapshot.exists()){
                         view.navigateToHome();
                     }else{
-                        view.navigateToLoginActivity();
+                        view.navigateToAccountChoiceActivity();
                     }
                 }
 
