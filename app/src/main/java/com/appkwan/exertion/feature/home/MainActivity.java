@@ -1,4 +1,4 @@
-package com.appkwan.exertion;
+package com.appkwan.exertion.feature.home;
 
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
@@ -9,6 +9,7 @@ import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 
+import com.appkwan.exertion.R;
 import com.appkwan.exertion.feature.BloodFragment;
 import com.appkwan.exertion.feature.TutionFragment;
 
