@@ -57,7 +57,7 @@ public class SignUpActivity extends AppCompatActivity implements SignUpView{
 
         mPresenter = new SignUpPresenter(this);
         mProgressDialog = new ProgressDialog(this);
-        mProgressDialog.setTitle("Please wait...");
+        mProgressDialog.setMessage("Please wait...");
     }
 
     @Override

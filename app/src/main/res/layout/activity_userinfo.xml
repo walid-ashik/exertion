@@ -69,13 +69,13 @@
                 android:background="@color/colorEditTextBG"
                 android:drawableLeft="@drawable/ic_person"
                 android:drawablePadding="10dp"
+                android:drawableTint="@color/userInfoTextColor"
                 android:gravity="center_vertical"
                 android:hint="Your Name"
                 android:inputType="textPersonName"
                 android:paddingLeft="10dp"
-                android:drawableTint="@color/userInfoTextColor"
                 android:textColor="@color/userInfoTextColor"
-                android:textColorHint="@color/userInfoTextColor" />
+             />
 
 
             <TextView
@@ -88,13 +88,11 @@
                 android:background="@color/colorEditTextBG"
                 android:drawableLeft="@drawable/ic_people"
                 android:drawablePadding="10dp"
+                android:drawableTint="@color/userInfoTextColor"
                 android:gravity="center_vertical"
-                android:textSize="16sp"
                 android:paddingLeft="10dp"
                 android:text="Select Your Gender"
-                android:drawableTint="@color/userInfoTextColor"
-                android:textColor="@color/userInfoTextColor"
-                android:textColorHint="@color/userInfoTextColor" />
+                android:textSize="16sp" />
 
             <EditText
                 android:id="@+id/mPresentAddress"
@@ -106,14 +104,12 @@
                 android:background="@color/colorEditTextBG"
                 android:drawableLeft="@drawable/ic_location"
                 android:drawablePadding="10dp"
+                android:drawableTint="@color/userInfoTextColor"
                 android:gravity="center_vertical"
                 android:hint="Present Address"
                 android:inputType="textPersonName"
                 android:paddingLeft="10dp"
-                android:drawableTint="@color/userInfoTextColor"
-                android:textColor="@color/userInfoTextColor"
-                android:textColorHint="@color/userInfoTextColor"                />
-
+                android:textColor="@color/userInfoTextColor" />
 
             <EditText
                 android:id="@+id/mPermanentAddress"
@@ -125,13 +121,12 @@
                 android:background="@color/colorEditTextBG"
                 android:drawableLeft="@drawable/ic_location"
                 android:drawablePadding="10dp"
+                android:drawableTint="@color/userInfoTextColor"
                 android:gravity="center_vertical"
                 android:hint="Permanent Address"
                 android:inputType="textPersonName"
                 android:paddingLeft="10dp"
-                android:drawableTint="@color/userInfoTextColor"
-                android:textColor="@color/userInfoTextColor"
-                android:textColorHint="@color/userInfoTextColor"/>
+                android:textColor="@color/userInfoTextColor" />
 
 
             <EditText
@@ -144,17 +139,17 @@
                 android:background="@color/colorEditTextBG"
                 android:drawableLeft="@drawable/ic_call"
                 android:drawablePadding="10dp"
+                android:drawableTint="@color/userInfoTextColor"
                 android:gravity="center_vertical"
                 android:hint="Phone"
                 android:inputType="phone"
                 android:paddingLeft="10dp"
-                android:drawableTint="@color/userInfoTextColor"
                 android:textColor="@color/almostBlack"
-                android:textColorHint="@color/userInfoTextColor" />
+                 />
 
 
             <Button
-                android:id="@+id/register_company_create_button"
+                android:id="@+id/mCreateButton"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="10dp"

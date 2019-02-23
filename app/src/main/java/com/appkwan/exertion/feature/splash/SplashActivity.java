@@ -11,7 +11,7 @@ import com.appkwan.exertion.R;
 import com.appkwan.exertion.feature.login.LoginActivity;
 import com.google.firebase.FirebaseApp;
 
-public class SplashActivity extends AppCompatActivity implements SplashContract.View{
+public class SplashActivity extends AppCompatActivity implements SplashContract.View {
 
     private SplashPresenter mPresenter;
 
@@ -21,14 +21,7 @@ public class SplashActivity extends AppCompatActivity implements SplashContract.
         setContentView(R.layout.activity_splash);
 
         mPresenter = new SplashPresenter(this);
-
-        new Handler().postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                mPresenter.checkIfUserLoggedIn();
-            }
-        }, 1000);
-
+        mPresenter.checkIfUserLoggedIn();
     }
 
     @Override
