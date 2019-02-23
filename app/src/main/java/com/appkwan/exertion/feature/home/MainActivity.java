@@ -14,6 +14,9 @@ import android.view.MenuItem;
 
 import com.appkwan.exertion.R;
 import com.appkwan.exertion.feature.accountchoice.AccountChoiceActivity;
+import com.appkwan.exertion.feature.home.fragments.BloodFragment;
+import com.appkwan.exertion.feature.home.fragments.TutionFragment;
+import com.appkwan.exertion.feature.userinfo.UserInfoActivity;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -64,6 +67,12 @@ public class MainActivity extends AppCompatActivity implements MainView {
     @Override
     public void navigateToLoginActivity() {
         startActivity(new Intent(this, AccountChoiceActivity.class));
+        finish();
+    }
+
+    @Override
+    public void navigateToUserInfoActivity() {
+        startActivity(new Intent(this, UserInfoActivity.class));
         finish();
     }
 

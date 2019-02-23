@@ -1,4 +1,4 @@
-package com.appkwan.exertion.feature.home;
+package com.appkwan.exertion.feature.home.fragments;
 
 
 import android.os.Bundle;

@@ -22,7 +22,7 @@ public class SplashPresenter implements SplashContract.Presenter {
     @Override
     public void checkIfUserLoggedIn() {
         if(FirebaseAuth.getInstance().getCurrentUser() == null){
-            view.navigateToAccountChoiceActivity();
+            view.navigateToLoginActivity();
             return;
         }else{
             checkUserType();
@@ -33,7 +33,7 @@ public class SplashPresenter implements SplashContract.Presenter {
         String userId = FirebaseAuth.getInstance().getCurrentUser().getUid();
 
         if(userId == null){
-            view.navigateToAccountChoiceActivity();
+            view.navigateToLoginActivity();
             return;
         }else{
 
@@ -43,7 +43,7 @@ public class SplashPresenter implements SplashContract.Presenter {
                     if(dataSnapshot.exists()){
                         view.navigateToHome();
                     }else{
-                        view.navigateToAccountChoiceActivity();
+                        view.navigateToLoginActivity();
                     }
                 }
 

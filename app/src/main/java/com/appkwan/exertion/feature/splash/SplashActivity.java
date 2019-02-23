@@ -27,14 +27,13 @@ public class SplashActivity extends AppCompatActivity implements SplashContract.
             public void run() {
                 mPresenter.checkIfUserLoggedIn();
             }
-        }, 3000);
-
+        }, 1000);
 
     }
 
     @Override
-    public void navigateToAccountChoiceActivity() {
-        startActivity(new Intent(this, AccountChoiceActivity.class));
+    public void navigateToLoginActivity() {
+        startActivity(new Intent(this, LoginActivity.class));
         finish();
         return;
     }

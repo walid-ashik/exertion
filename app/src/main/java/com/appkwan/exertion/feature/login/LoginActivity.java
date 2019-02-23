@@ -1,5 +1,6 @@
 package com.appkwan.exertion.feature.login;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -11,8 +12,10 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.appkwan.exertion.R;
+import com.appkwan.exertion.feature.accountchoice.AccountChoiceActivity;
 import com.appkwan.exertion.feature.home.MainActivity;
 import com.appkwan.exertion.feature.signup.SignUpActivity;
+import com.appkwan.exertion.feature.signup.SignUpPresenter;
 import com.google.android.gms.common.oob.SignUp;
 
 import butterknife.BindView;
@@ -33,12 +36,11 @@ public class LoginActivity extends AppCompatActivity implements LoginContract.Vi
     Button mPhoneRegistrationButton;
     @BindView(R.id.textView)
     TextView textView;
-    @BindView(R.id.textView2)
-    TextView textView2;
-    @BindView(R.id.mDontHaveAccountTextView)
+    @BindView(R.id.mDontHaveAccount)
     TextView mDontHaveAccountTextView;
 
     private LoginPresenter mPresenter;
+    private ProgressDialog mProgressDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,6 +49,9 @@ public class LoginActivity extends AppCompatActivity implements LoginContract.Vi
         ButterKnife.bind(this);
 
         mPresenter = new LoginPresenter(this);
+
+        mProgressDialog = new ProgressDialog(this);
+        mProgressDialog.setTitle("Please wait...");
     }
 
     @OnClick(R.id.mLoginButton)
@@ -79,9 +84,9 @@ public class LoginActivity extends AppCompatActivity implements LoginContract.Vi
         Toast.makeText(this, "Under development!", Toast.LENGTH_SHORT).show();
     }
 
-    @OnClick(R.id.mDontHaveAccountTextView)
+    @OnClick(R.id.mDontHaveAccount)
     public void dontHaveAccountClicked(View view){
-        startActivity(new Intent(this, SignUpActivity.class));
+        startActivity(new Intent(this, AccountChoiceActivity.class));
     }
 
     @Override
@@ -94,5 +99,15 @@ public class LoginActivity extends AppCompatActivity implements LoginContract.Vi
     @Override
     public void onLoginError(String e) {
         Toast.makeText(this, e, Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void showLoader() {
+        mProgressDialog.show();
+    }
+
+    @Override
+    public void hideLoader() {
+        mProgressDialog.hide();
     }
 }

@@ -3,7 +3,7 @@ package com.appkwan.exertion.feature.splash;
 public interface SplashContract {
 
     interface View{
-        void navigateToAccountChoiceActivity();
+        void navigateToLoginActivity();
         void navigateToHome();
     }
 

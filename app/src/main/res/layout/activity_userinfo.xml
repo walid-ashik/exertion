@@ -54,6 +54,7 @@
                 android:layout_marginEnd="8dp"
                 android:layout_marginBottom="20dp"
                 android:text="Please provide your details"
+                android:textColor="@color/defaultTextColor"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/mUserINfoProfile" />
@@ -72,8 +73,9 @@
                 android:hint="Your Name"
                 android:inputType="textPersonName"
                 android:paddingLeft="10dp"
-                android:textColor="@color/colorAccent"
-                android:textColorHint="@color/colorHintEditText" />
+                android:drawableTint="@color/userInfoTextColor"
+                android:textColor="@color/userInfoTextColor"
+                android:textColorHint="@color/userInfoTextColor" />
 
 
             <TextView
@@ -81,16 +83,18 @@
                 android:layout_width="match_parent"
                 android:layout_height="45dp"
                 android:layout_marginLeft="10dp"
-                android:text="Select Your Gender"
                 android:layout_marginTop="5dp"
                 android:layout_marginRight="10dp"
-                android:textColor="@color/colorHintEditText"
                 android:background="@color/colorEditTextBG"
                 android:drawableLeft="@drawable/ic_people"
                 android:drawablePadding="10dp"
                 android:gravity="center_vertical"
+                android:textSize="16sp"
                 android:paddingLeft="10dp"
-                />
+                android:text="Select Your Gender"
+                android:drawableTint="@color/userInfoTextColor"
+                android:textColor="@color/userInfoTextColor"
+                android:textColorHint="@color/userInfoTextColor" />
 
             <EditText
                 android:id="@+id/mPresentAddress"
@@ -106,8 +110,9 @@
                 android:hint="Present Address"
                 android:inputType="textPersonName"
                 android:paddingLeft="10dp"
-                android:textColor="@color/colorAccent"
-                android:textColorHint="@color/colorHintEditText" />
+                android:drawableTint="@color/userInfoTextColor"
+                android:textColor="@color/userInfoTextColor"
+                android:textColorHint="@color/userInfoTextColor"                />
 
 
             <EditText
@@ -124,8 +129,9 @@
                 android:hint="Permanent Address"
                 android:inputType="textPersonName"
                 android:paddingLeft="10dp"
-                android:textColor="@color/colorAccent"
-                android:textColorHint="@color/colorHintEditText" />
+                android:drawableTint="@color/userInfoTextColor"
+                android:textColor="@color/userInfoTextColor"
+                android:textColorHint="@color/userInfoTextColor"/>
 
 
             <EditText
@@ -142,8 +148,9 @@
                 android:hint="Phone"
                 android:inputType="phone"
                 android:paddingLeft="10dp"
-                android:textColor="@color/colorAccent"
-                android:textColorHint="@color/colorHintEditText" />
+                android:drawableTint="@color/userInfoTextColor"
+                android:textColor="@color/almostBlack"
+                android:textColorHint="@color/userInfoTextColor" />
 
 
             <Button
