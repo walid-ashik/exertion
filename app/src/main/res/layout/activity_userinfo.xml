@@ -147,7 +147,22 @@
                 android:textColor="@color/almostBlack"
                  />
 
-
+            <TextView
+                android:id="@+id/mBloodGroup"
+                android:layout_width="match_parent"
+                android:layout_height="45dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="5dp"
+                android:layout_marginRight="10dp"
+                android:background="@color/colorEditTextBG"
+                android:drawableLeft="@drawable/ic_blood"
+                android:drawablePadding="10dp"
+                android:drawableTint="#F46B5B"
+                android:gravity="center_vertical"
+                android:paddingLeft="10dp"
+                android:textColor="#F46B5B"
+                android:text="Blood Group"
+                android:textSize="16sp" />
             <Button
                 android:id="@+id/mCreateButton"
                 android:layout_width="match_parent"
@@ -160,6 +175,7 @@
                 android:text="Create"
                 android:textAllCaps="false"
                 android:textColor="@android:color/white" />
+
 
         </LinearLayout>
 

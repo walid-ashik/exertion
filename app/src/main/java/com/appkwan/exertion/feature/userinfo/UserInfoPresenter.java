@@ -31,7 +31,7 @@ public class UserInfoPresenter {
 
     }
 
-    void uploadUserInfo(String name, String gender, String presentAddress, String permanentAddress, String phone){
+    void uploadUserInfo(String name, String gender, String presentAddress, String permanentAddress, String phone, String blood){
 
         view.showLoader();
 
@@ -41,6 +41,7 @@ public class UserInfoPresenter {
         map.put("presentAddress", presentAddress );
         map.put("permanentAddress", permanentAddress );
         map.put("phone", phone );
+        map.put("blood", blood);
 
         mRootDataRef.child(userId).updateChildren(map).addOnCompleteListener(task -> {
             if(task.isSuccessful()){

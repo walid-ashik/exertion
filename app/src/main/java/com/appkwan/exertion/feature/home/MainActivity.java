@@ -2,6 +2,7 @@ package com.appkwan.exertion.feature.home;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -11,15 +12,18 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 
 import com.appkwan.exertion.R;
 import com.appkwan.exertion.feature.accountchoice.AccountChoiceActivity;
 import com.appkwan.exertion.feature.home.fragments.BloodFragment;
 import com.appkwan.exertion.feature.home.fragments.TutionFragment;
+import com.appkwan.exertion.feature.newpost.NewPostActivity;
 import com.appkwan.exertion.feature.userinfo.UserInfoActivity;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 public class MainActivity extends AppCompatActivity implements MainView {
 
@@ -29,6 +33,8 @@ public class MainActivity extends AppCompatActivity implements MainView {
     TabLayout tabLayout;
     @BindView(R.id.viewpager)
     ViewPager viewpager;
+    @BindView(R.id.mNewPostFloatButton)
+    FloatingActionButton mNewPostFloatButton;
 
     private MainPresenter mPresenter;
 
@@ -56,7 +62,7 @@ public class MainActivity extends AppCompatActivity implements MainView {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()){
+        switch (item.getItemId()) {
             case R.id.action_logout:
                 mPresenter.logoutUser();
                 break;
@@ -76,6 +82,11 @@ public class MainActivity extends AppCompatActivity implements MainView {
         finish();
     }
 
+    @OnClick(R.id.mNewPostFloatButton)
+    public void createNewPost(View view){
+        startActivity(new Intent(this, NewPostActivity.class
+        ));
+    }
     private void initToolBar() {
         setSupportActionBar(toolbar);
     }

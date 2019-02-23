@@ -5,24 +5,21 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.CardView;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.Spinner;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.appkwan.exertion.R;
 import com.appkwan.exertion.feature.home.MainActivity;
-import com.appkwan.exertion.feature.home.MainPresenter;
-import com.appkwan.exertion.feature.home.MainView;
-import com.appkwan.exertion.feature.signup.SignUpPresenter;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -48,10 +45,13 @@ public class UserInfoActivity extends AppCompatActivity implements UserInfoView 
     Button mCreateButton;
     @BindView(R.id.cardView)
     CardView cardView;
+    @BindView(R.id.mBloodGroup)
+    TextView mBloodGroup;
 
     private UserInfoPresenter mPresenter;
     private ProgressDialog mProgressDialog;
     private String mGender = "";
+    private String mBlood = "";
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -91,6 +91,11 @@ public class UserInfoActivity extends AppCompatActivity implements UserInfoView 
         showGenderSelectionDialog();
     }
 
+    @OnClick(R.id.mBloodGroup)
+    public void selectBloodGroup(View view) {
+        showBloodGroupDialog();
+    }
+
     @OnClick(R.id.mCreateButton)
     public void createButtonClicked(View view) {
 
@@ -99,14 +104,15 @@ public class UserInfoActivity extends AppCompatActivity implements UserInfoView 
         String presentAddress = mPresentAddress.getText().toString().trim();
         String permanentAddress = mPermanentAddress.getText().toString().trim();
         String phone = mUserPhone.getText().toString().trim();
+        String blood = mBlood;
 
-        if (isUserInputtedAll(name, gender, presentAddress, permanentAddress, phone)) {
-            mPresenter.uploadUserInfo(name, gender, presentAddress, permanentAddress, phone);
+        if (isUserInputtedAll(name, gender, presentAddress, permanentAddress, phone, blood)) {
+            mPresenter.uploadUserInfo(name, gender, presentAddress, permanentAddress, phone, blood);
         }
     }
 
-    private boolean isUserInputtedAll(String name, String gender, String presentAddress, String permanentAddress, String phone) {
-        if (name.isEmpty() || gender.isEmpty() || presentAddress.isEmpty() || permanentAddress.isEmpty() || phone.isEmpty()) {
+    private boolean isUserInputtedAll(String name, String gender, String presentAddress, String permanentAddress, String phone, String blood) {
+        if (name.isEmpty() || gender.isEmpty() || presentAddress.isEmpty() || permanentAddress.isEmpty() || phone.isEmpty() || blood.isEmpty()) {
             Toast.makeText(this, "Please input all", Toast.LENGTH_SHORT).show();
             return false;
         }
@@ -114,7 +120,7 @@ public class UserInfoActivity extends AppCompatActivity implements UserInfoView 
     }
 
     private void showGenderSelectionDialog() {
-        final android.support.v7.app.AlertDialog.Builder alertDialogBuilder = new android.support.v7.app.AlertDialog.Builder(this);
+        final AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
 
         LayoutInflater inflater = (LayoutInflater) this.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         View view = inflater.inflate(R.layout.dialog_gender_selection, null);
@@ -122,7 +128,7 @@ public class UserInfoActivity extends AppCompatActivity implements UserInfoView 
         alertDialogBuilder.setView(view);
         alertDialogBuilder.setCancelable(true);
 
-        final android.support.v7.app.AlertDialog dialog = alertDialogBuilder.create();
+        final AlertDialog dialog = alertDialogBuilder.create();
 
         TextView maleTextView = view.findViewById(R.id.maleTextView);
         TextView femaleTextView = view.findViewById(R.id.femaleTextView);
@@ -141,6 +147,40 @@ public class UserInfoActivity extends AppCompatActivity implements UserInfoView 
             dialog.hide();
         });
 
+
+    }
+
+    private void showBloodGroupDialog() {
+        final AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
+
+        LayoutInflater inflater = (LayoutInflater) this.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        View view = inflater.inflate(R.layout.dialog_blood_group, null);
+
+        alertDialogBuilder.setView(view);
+        alertDialogBuilder.setCancelable(true);
+
+        final AlertDialog dialog = alertDialogBuilder.create();
+
+        RadioGroup bloodRadioGroup = view.findViewById(R.id.bloodRadioGroup);
+        Button confirm = view.findViewById(R.id.buttonConfirm);
+
+        bloodRadioGroup.setOnCheckedChangeListener((radioGroup, checkedId) -> {
+            RadioButton rb = radioGroup.findViewById(checkedId);
+
+            if (null != rb && checkedId > -1) {
+                mBlood = rb.getText().toString();
+            }
+        });
+
+        confirm.setOnClickListener(view1 -> {
+            if(! mBlood.isEmpty()){
+                mBloodGroup.setText("Blood Group: " + mBlood);
+                dialog.hide();
+            }
+
+        });
+
+        dialog.show();
 
     }
 }

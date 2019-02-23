@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <RadioGroup
+        android:id="@+id/bloodRadioGroup"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/activity_horizontal_margin"
+        android:layout_marginStart="100dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="32dp"
+        android:layout_marginBottom="8dp"
+        android:orientation="vertical"
+        android:paddingStart="60dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.26"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView17"
+        app:layout_constraintVertical_bias="0.0">
+
+        <RadioButton
+            android:id="@+id/rb_a_positive"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="A+"
+            android:textSize="14sp" />
+
+        <RadioButton
+            android:id="@+id/rb_a_negative"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="A -"
+            android:textSize="14sp" />
+
+        <RadioButton
+            android:id="@+id/rb_b_positive"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="B+"
+            android:textSize="14sp" />
+
+        <RadioButton
+            android:id="@+id/rb_b_negative"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="B -"
+            android:textSize="14sp" />
+
+        <RadioButton
+            android:id="@+id/rb_ab_positive"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="AB+"
+            android:textSize="14sp" />
+
+        <RadioButton
+            android:id="@+id/rb_ab_negative"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="AB -"
+            android:textSize="14sp" />
+
+
+        <RadioButton
+            android:id="@+id/rb_o_positive"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="O+"
+            android:textSize="14sp" />
+
+        <RadioButton
+            android:id="@+id/rb_o_negative"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="O -"
+            android:textSize="14sp" />
+
+    </RadioGroup>
+
+    <TextView
+        android:id="@+id/textView17"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginBottom="16dp"
+        android:text="Please Select Your Blood Group"
+        android:textColor="@color/darkTextColor"
+        android:textSize="14sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+
+    <Button
+        android:id="@+id/buttonConfirm"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="12dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginBottom="8dp"
+        android:background="@color/colorPrimary"
+        android:text="Confirm"
+        android:textColor="@color/colorWhite"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/bloodRadioGroup" />
+</android.support.constraint.ConstraintLayout>
