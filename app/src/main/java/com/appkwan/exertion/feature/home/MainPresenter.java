@@ -11,6 +11,8 @@ import com.google.firebase.database.ValueEventListener;
 
 public class MainPresenter  {
     private MainView view;
+    private UserInfo userInfoView;
+
     private final DatabaseReference mRootDataRef;
     private String userId;
 
