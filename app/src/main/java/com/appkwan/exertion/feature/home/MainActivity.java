@@ -16,8 +16,8 @@ import android.view.View;
 
 import com.appkwan.exertion.R;
 import com.appkwan.exertion.feature.accountchoice.AccountChoiceActivity;
-import com.appkwan.exertion.feature.home.fragments.BloodFragment;
-import com.appkwan.exertion.feature.home.fragments.TutionFragment;
+import com.appkwan.exertion.feature.home.fragments.blood.BloodFragment;
+import com.appkwan.exertion.feature.home.fragments.tuition.TutionFragment;
 import com.appkwan.exertion.feature.newpost.NewPostActivity;
 import com.appkwan.exertion.feature.userinfo.UserInfoActivity;
 

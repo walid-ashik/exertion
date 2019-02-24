@@ -58,7 +58,7 @@
             tools:text="User Location, Anywhere" />
 
         <ImageView
-            android:id="@+id/imageView7"
+            android:id="@+id/mBloodIconImageView"
             android:layout_width="16dp"
             android:layout_height="18dp"
             android:layout_marginTop="8dp"

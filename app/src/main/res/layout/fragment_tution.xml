@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/colorPrimary"
-    tools:context=".feature.home.fragments.TutionFragment">
+    tools:context=".feature.home.fragments.tuition.TutionFragment">
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/mTuitionRecyclerView"
