@@ -156,6 +156,7 @@ public class NewPostActivity extends AppCompatActivity implements NewPostView {
 
             if (null != rb && checkedId > -1) {
                 mBloodGroup = rb.getText().toString();
+                mPostType = "Blood";
             }
         });
 
