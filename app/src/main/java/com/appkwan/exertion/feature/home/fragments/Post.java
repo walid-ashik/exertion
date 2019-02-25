@@ -2,19 +2,12 @@ package com.appkwan.exertion.feature.home.fragments;
 
 public class Post {
 
-    private String group;
-    private String location;
-    private String post;
-    private String user_id;
+   public String group;
+    public String location;
+    public String post;
+    public String user_id;
 
     public Post() {
-    }
-
-    public Post(String group, String location, String post, String user_id) {
-        this.group = group;
-        this.location = location;
-        this.post = post;
-        this.user_id = user_id;
     }
 
     public String getGroup() {

@@ -6,4 +6,6 @@ import java.util.List;
 
 public interface TuitionView {
     void onPostLoaded(List<Post> postList);
+
+    void onPostLoadingError(String message);
 }

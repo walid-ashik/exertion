@@ -28,28 +28,7 @@ import de.hdodenhof.circleimageview.CircleImageView;
 
 public class TuitionAdapter extends RecyclerView.Adapter<TuitionAdapter.ViewHolder> {
 
-    @BindView(R.id.mUserImageView)
-    CircleImageView mUserImageView;
-    @BindView(R.id.mUserNameTextView)
-    TextView mUserNameTextView;
-    @BindView(R.id.imageView4)
-    ImageView imageView4;
-    @BindView(R.id.mLocationTextView)
-    TextView mLocationTextView;
-    @BindView(R.id.mBloodIconImageView)
-    ImageView mBloodIconImageView;
-    @BindView(R.id.mBloodTextView)
-    TextView mBloodTextView;
-    @BindView(R.id.mPostTextVIew)
-    TextView mPostTextVIew;
-    @BindView(R.id.mCommentButton)
-    LinearLayout mCommentButton;
-    @BindView(R.id.mSendButton)
-    LinearLayout mSendButton;
-    @BindView(R.id.linearLayout)
-    LinearLayout linearLayout;
-
-    private List<Post> postList = new ArrayList<>();
+    private List<Post> postList;
     private Context context;
 
     public TuitionAdapter(List<Post> postList, Context context) {
@@ -72,7 +51,8 @@ public class TuitionAdapter extends RecyclerView.Adapter<TuitionAdapter.ViewHold
 
         holder.setPostToTextView(post.getPost());
         holder.getUserNameFromDatabase(post.getUser_id());
-
+        holder.setLocation(post.getLocation());
+        holder.setBlood(post.getGroup());
     }
 
     @Override
@@ -83,6 +63,26 @@ public class TuitionAdapter extends RecyclerView.Adapter<TuitionAdapter.ViewHold
     public class ViewHolder extends RecyclerView.ViewHolder {
 
         DatabaseReference mUserRef;
+        @BindView(R.id.mUserImageView)
+        CircleImageView mUserImageView;
+        @BindView(R.id.mUserNameTextView)
+        TextView mUserNameTextView;
+        @BindView(R.id.imageView4)
+        ImageView imageView4;
+        @BindView(R.id.mLocationTextView)
+        TextView mLocationTextView;
+        @BindView(R.id.mBloodIconImageView)
+        ImageView mBloodIconImageView;
+        @BindView(R.id.mBloodTextView)
+        TextView mBloodTextView;
+        @BindView(R.id.mPostTextVIew)
+        TextView mPostTextVIew;
+        @BindView(R.id.mCommentButton)
+        LinearLayout mCommentButton;
+        @BindView(R.id.mSendButton)
+        LinearLayout mSendButton;
+        @BindView(R.id.linearLayout)
+        LinearLayout linearLayout;
 
         public ViewHolder(View itemView) {
             super(itemView);
@@ -91,18 +91,15 @@ public class TuitionAdapter extends RecyclerView.Adapter<TuitionAdapter.ViewHold
         }
 
         public void setPostToTextView(String post) {
-            if (post != null)
-                mPostTextVIew.setText(post);
+            mPostTextVIew.setText(post);
         }
 
         public void getUserNameFromDatabase(String user_id) {
             mUserRef.child(user_id).addValueEventListener(new ValueEventListener() {
                 @Override
                 public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-
-                    for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
-                        User user = snapshot.getValue(User.class);
-                        setUserName(user.getName());
+                    if (dataSnapshot.exists()) {
+                        setUserName(dataSnapshot.child("name").getValue().toString());
                     }
                 }
 
@@ -115,6 +112,14 @@ public class TuitionAdapter extends RecyclerView.Adapter<TuitionAdapter.ViewHold
 
         private void setUserName(String name) {
             mUserNameTextView.setText(name);
+        }
+
+        public void setLocation(String location) {
+            mLocationTextView.setText(location);
+        }
+
+        public void setBlood(String group) {
+            mBloodTextView.setText(group);
         }
     }
 }

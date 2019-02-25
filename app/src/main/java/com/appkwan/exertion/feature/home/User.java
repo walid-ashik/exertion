@@ -13,16 +13,6 @@ public class User {
     public User() {
     }
 
-    public User(String blood, String email, String gender, String name, String permanentAddress, String phone, String presentAddress, String userType) {
-        this.blood = blood;
-        this.email = email;
-        this.gender = gender;
-        this.name = name;
-        this.permanentAddress = permanentAddress;
-        this.phone = phone;
-        this.presentAddress = presentAddress;
-        this.userType = userType;
-    }
 
     public String getBlood() {
         return blood;

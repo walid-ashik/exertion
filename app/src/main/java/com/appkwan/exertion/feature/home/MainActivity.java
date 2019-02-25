@@ -17,7 +17,7 @@ import android.view.View;
 import com.appkwan.exertion.R;
 import com.appkwan.exertion.feature.accountchoice.AccountChoiceActivity;
 import com.appkwan.exertion.feature.home.fragments.blood.BloodFragment;
-import com.appkwan.exertion.feature.home.fragments.tuition.TutionFragment;
+import com.appkwan.exertion.feature.home.fragments.tuition.TuitionFragment;
 import com.appkwan.exertion.feature.newpost.NewPostActivity;
 import com.appkwan.exertion.feature.userinfo.UserInfoActivity;
 
@@ -102,7 +102,7 @@ public class MainActivity extends AppCompatActivity implements MainView {
             Fragment fragment = null;
             switch (position) {
                 case 0:
-                    fragment = new TutionFragment();
+                    fragment = new TuitionFragment();
                     break;
                 case 1:
                     fragment = new BloodFragment();

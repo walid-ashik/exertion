@@ -6,9 +6,11 @@ import android.support.v4.app.Fragment;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.appkwan.exertion.R;
 import com.appkwan.exertion.feature.home.fragments.Post;
@@ -22,7 +24,9 @@ import butterknife.Unbinder;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class TutionFragment extends Fragment implements TuitionView {
+public class TuitionFragment extends Fragment implements TuitionView {
+
+    private static final String TAG = "TuitionFragment";
 
     @BindView(R.id.mTuitionRecyclerView)
     RecyclerView mTuitionRecyclerView;
@@ -34,7 +38,7 @@ public class TutionFragment extends Fragment implements TuitionView {
     Unbinder unbinder;
 
 
-    public TutionFragment() {
+    public TuitionFragment() {
         // Required empty public constructor
     }
 
@@ -62,7 +66,11 @@ public class TutionFragment extends Fragment implements TuitionView {
         mAdapter = new TuitionAdapter(postList, getContext());
         mTuitionRecyclerView.setAdapter(mAdapter);
         mAdapter.notifyDataSetChanged();
+    }
 
+    @Override
+    public void onPostLoadingError(String message) {
+        Toast.makeText(getContext(), message, Toast.LENGTH_SHORT).show();
     }
 
     private void initRecyclerView(View view) {

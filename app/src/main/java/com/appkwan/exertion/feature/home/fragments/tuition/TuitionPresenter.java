@@ -19,32 +19,31 @@ public class TuitionPresenter {
 
     private TuitionView view;
     private DatabaseReference mRootDataRef;
-    private List<Post> postList = new ArrayList<>();
+    private List<Post> postList;
 
     public TuitionPresenter(TuitionView view) {
         this.view = view;
-        mRootDataRef = FirebaseDatabase.getInstance().getReference();
+        postList = new ArrayList<>();
+        mRootDataRef = FirebaseDatabase.getInstance().getReference().child("Tuition");
     }
 
-    void getAllTuitionPosts(){
-        mRootDataRef.child("Tuition").addValueEventListener(new ValueEventListener() {
+    void getAllTuitionPosts() {
+        mRootDataRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
 
-                if(dataSnapshot.exists()){
-                    for(DataSnapshot snapshot : dataSnapshot.getChildren()){
-                        Post post = snapshot.getValue(Post.class);
-                        Log.e(TAG, "onDataChange: " +post.getPost());
-                        Log.e(TAG, "onDataChange: " +post.getLocation());
-                        postList.add(post);
-                        view.onPostLoaded(postList);
-                    }
+                for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                    Post post = snapshot.getValue(Post.class);
+                    Log.e(TAG, "onDataChange: " + post.getPost());
+                    Log.e(TAG, "onDataChange: " + post.getLocation());
+                    postList.add(post);
+                    view.onPostLoaded(postList);
                 }
             }
 
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
-
+                view.onPostLoadingError(databaseError.getMessage());
             }
         });
     }

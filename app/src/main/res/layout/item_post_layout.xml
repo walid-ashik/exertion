@@ -5,10 +5,10 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_marginStart="5dp"
-    android:layout_marginTop="2.5dp"
+    android:layout_marginTop="5dp"
     android:layout_marginEnd="5dp"
-    app:cardCornerRadius="10dp"
-    android:layout_marginBottom="2.5dp">
+    android:layout_marginBottom="2.5dp"
+    app:cardCornerRadius="10dp">
 
     <android.support.constraint.ConstraintLayout
         android:layout_width="match_parent"
@@ -28,19 +28,24 @@
             android:id="@+id/mUserNameTextView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="8dp"
             android:fontFamily="sans-serif-medium"
             android:text="TextView"
             android:textColor="#414141"
             android:textSize="16sp"
-            tools:layout_editor_absoluteX="77dp"
-            tools:layout_editor_absoluteY="12dp"
+            app:layout_constraintEnd_toStartOf="@+id/mBloodIconImageView"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toEndOf="@+id/mUserImageView"
+            app:layout_constraintTop_toTopOf="parent"
             tools:text="Pritom Adhikary" />
 
         <ImageView
             android:id="@+id/imageView4"
             android:layout_width="14dp"
             android:layout_height="14dp"
-            android:layout_marginStart="16dp"
+            android:layout_marginStart="14dp"
             android:src="@drawable/ic_location"
             android:tint="@color/colorLessAccent"
             app:layout_constraintStart_toEndOf="@+id/mUserImageView"
@@ -61,18 +66,22 @@
             android:id="@+id/mBloodIconImageView"
             android:layout_width="16dp"
             android:layout_height="18dp"
+            android:layout_marginStart="8dp"
             android:layout_marginTop="8dp"
             android:layout_marginBottom="8dp"
             android:src="@drawable/ic_location"
             android:tint="@color/colorLessAccent"
             app:layout_constraintBottom_toTopOf="@+id/mPostTextVIew"
             app:layout_constraintEnd_toStartOf="@+id/mBloodTextView"
+            app:layout_constraintHorizontal_bias="1.0"
+            app:layout_constraintStart_toEndOf="@+id/mLocationTextView"
             app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
             android:id="@+id/mBloodTextView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
             android:layout_marginTop="8dp"
             android:layout_marginEnd="8dp"
             android:layout_marginBottom="8dp"
@@ -81,6 +90,8 @@
             android:textSize="16sp"
             app:layout_constraintBottom_toTopOf="@+id/mPostTextVIew"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.97"
+            app:layout_constraintStart_toEndOf="@+id/mLocationTextView"
             app:layout_constraintTop_toTopOf="parent"
             tools:text="A+" />
 
@@ -108,10 +119,10 @@
             android:id="@+id/linearLayout"
             android:layout_width="match_parent"
             android:layout_height="50dp"
-            android:orientation="horizontal"
-            android:weightSum="2"
             android:layout_marginTop="5dp"
             android:background="@color/colorPrimaryDark"
+            android:orientation="horizontal"
+            android:weightSum="2"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -121,10 +132,10 @@
             <LinearLayout
                 android:id="@+id/mCommentButton"
                 android:layout_width="0dp"
-                android:orientation="vertical"
+                android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:gravity="center"
-                android:layout_height="match_parent">
+                android:orientation="vertical">
 
                 <ImageView
                     android:layout_width="20dp"
@@ -137,10 +148,10 @@
             <LinearLayout
                 android:id="@+id/mSendButton"
                 android:layout_width="0dp"
-                android:orientation="vertical"
+                android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:gravity="center"
-                android:layout_height="match_parent">
+                android:orientation="vertical">
 
                 <ImageView
                     android:layout_width="20dp"
