@@ -1,4 +1,4 @@
-package com.appkwan.exertion.feature.home.fragments.tuition;
+package com.appkwan.exertion.feature.home.fragments.blood;
 
 import android.content.Context;
 import android.content.Intent;
@@ -13,7 +13,6 @@ import android.widget.TextView;
 
 import com.appkwan.exertion.R;
 import com.appkwan.exertion.feature.comment.CommentActivity;
-import com.appkwan.exertion.feature.home.User;
 import com.appkwan.exertion.feature.home.fragments.Post;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -21,19 +20,18 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import de.hdodenhof.circleimageview.CircleImageView;
 
-public class TuitionAdapter extends RecyclerView.Adapter<TuitionAdapter.ViewHolder> {
+public class BloodAdapter extends RecyclerView.Adapter<BloodAdapter.ViewHolder> {
 
     private List<Post> postList;
     private Context context;
 
-    public TuitionAdapter(List<Post> postList, Context context) {
+    public BloodAdapter(List<Post> postList, Context context) {
         this.postList = postList;
         this.context = context;
     }
@@ -41,9 +39,8 @@ public class TuitionAdapter extends RecyclerView.Adapter<TuitionAdapter.ViewHold
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-
         View view = LayoutInflater.from(context).inflate(R.layout.item_post_layout, parent, false);
-        return new ViewHolder(view);
+        return new BloodAdapter.ViewHolder(view);
     }
 
     @Override
@@ -60,6 +57,7 @@ public class TuitionAdapter extends RecyclerView.Adapter<TuitionAdapter.ViewHold
             Intent intent = new Intent(context, CommentActivity.class);
             context.startActivity(intent);
         });
+
     }
 
     @Override
@@ -67,8 +65,7 @@ public class TuitionAdapter extends RecyclerView.Adapter<TuitionAdapter.ViewHold
         return postList.size();
     }
 
-    public class ViewHolder extends RecyclerView.ViewHolder {
-
+    public class ViewHolder extends RecyclerView.ViewHolder{
         DatabaseReference mUserRef;
         @BindView(R.id.mUserImageView)
         CircleImageView mUserImageView;
@@ -94,10 +91,6 @@ public class TuitionAdapter extends RecyclerView.Adapter<TuitionAdapter.ViewHold
         public ViewHolder(View itemView) {
             super(itemView);
             ButterKnife.bind(this, itemView);
-
-            mBloodTextView.setVisibility(View.GONE);
-            mBloodIconImageView.setVisibility(View.GONE);
-
             mUserRef = FirebaseDatabase.getInstance().getReference().child("Users");
         }
 

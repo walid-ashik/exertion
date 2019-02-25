@@ -1,5 +1,6 @@
 package com.appkwan.exertion.feature.newpost;
 
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.constraint.ConstraintLayout;
@@ -48,6 +49,7 @@ public class NewPostActivity extends AppCompatActivity implements NewPostView {
 
     private String mPostType = "";
     private String mBloodGroup = "";
+    private ProgressDialog mProgressDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,6 +59,8 @@ public class NewPostActivity extends AppCompatActivity implements NewPostView {
         mPresenter = new NewPostPresenter(this);
 
         mPresenter.getUserName();
+        mProgressDialog = new ProgressDialog(this);
+        mProgressDialog.setMessage("Please wait...");
     }
 
     @Override
@@ -93,13 +97,23 @@ public class NewPostActivity extends AppCompatActivity implements NewPostView {
 
     @Override
     public void onPostSuccess() {
-        Toast.makeText(this, "Posted Successfully!", Toast.LENGTH_SHORT).show();
         onBackPressed();
+        Toast.makeText(this, "Posted Successfully!", Toast.LENGTH_SHORT).show();
     }
 
     @Override
     public void onPostDatabaseError(String message) {
         Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void hideLoader() {
+        mProgressDialog.hide();
+    }
+
+    @Override
+    public void showLoader() {
+        mProgressDialog.show();
     }
 
     private void saveThePostInDatabase() {

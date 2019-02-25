@@ -51,6 +51,9 @@ public class NewPostPresenter implements UserInfo {
     }
 
     public void saveThePostToDataBase(String mPostType, String post, String location, String mBloodGroup) {
+
+        view.showLoader();
+
         Map map = new HashMap();
         map.put("post", post);
         map.put("location", location);
@@ -61,8 +64,10 @@ public class NewPostPresenter implements UserInfo {
 
         mRootDataRef.child(mPostType).child(pushKey).updateChildren(map).addOnCompleteListener(task -> {
             if(task.isSuccessful()){
+                view.hideLoader();
                 view.onPostSuccess();
             }else{
+                view.hideLoader();
                 view.onPostDatabaseError(task.getException().getMessage());
             }
         });

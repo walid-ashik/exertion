@@ -32,6 +32,8 @@ public class TuitionPresenter {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
 
+                postList.clear();
+
                 for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
                     Post post = snapshot.getValue(Post.class);
                     Log.e(TAG, "onDataChange: " + post.getPost());

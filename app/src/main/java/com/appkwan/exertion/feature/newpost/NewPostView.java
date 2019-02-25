@@ -6,4 +6,8 @@ public interface NewPostView {
     void onPostSuccess();
 
     void onPostDatabaseError(String message);
+
+    void hideLoader();
+
+    void showLoader();
 }

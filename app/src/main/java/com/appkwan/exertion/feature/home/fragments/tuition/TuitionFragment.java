@@ -15,6 +15,8 @@ import android.widget.Toast;
 import com.appkwan.exertion.R;
 import com.appkwan.exertion.feature.home.fragments.Post;
 
+import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 
 import butterknife.BindView;
@@ -63,6 +65,9 @@ public class TuitionFragment extends Fragment implements TuitionView {
 
     @Override
     public void onPostLoaded(List<Post> postList) {
+
+        Collections.reverse(postList);
+
         mAdapter = new TuitionAdapter(postList, getContext());
         mTuitionRecyclerView.setAdapter(mAdapter);
         mAdapter.notifyDataSetChanged();
