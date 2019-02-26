@@ -2,10 +2,12 @@ package com.appkwan.exertion.feature.home.fragments;
 
 public class Post {
 
-   public String group;
+    public String group;
     public String location;
     public String post;
     public String user_id;
+
+    public String postId;
 
     public Post() {
     }
@@ -40,5 +42,13 @@ public class Post {
 
     public void setUser_id(String user_id) {
         this.user_id = user_id;
+    }
+
+    public String getPostId() {
+        return postId;
+    }
+
+    public void setPostId(String postId) {
+        this.postId = postId;
     }
 }

@@ -6,4 +6,68 @@
     android:layout_height="match_parent"
     tools:context=".feature.comment.CommentActivity">
 
+    <TextView
+        android:id="@+id/mNoCommentTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginBottom="8dp"
+        android:text="No Comment Found."
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="@+id/mCommentRecyclerView"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/mCommentRecyclerView"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_marginStart="5dp"
+        android:layout_marginEnd="5dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+    </android.support.v7.widget.RecyclerView>
+
+    <LinearLayout
+        android:id="@+id/linearLayout2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/corner_rectangle_comment_box"
+        android:orientation="horizontal"
+        android:weightSum="5"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/mCommentRecyclerView"
+        app:layout_constraintTop_toTopOf="@+id/mCommentRecyclerView"
+        app:layout_constraintVertical_bias="1.0">
+
+        <EditText
+            android:id="@+id/mCommentEditText"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="4"
+            android:background="@android:color/transparent"
+            android:hint="Write your comment"
+            android:minHeight="40dp"
+            android:paddingStart="10dp"
+            android:textSize="14sp" />
+
+        <ImageView
+            android:id="@+id/mPostCommentImageViewButton"
+            android:layout_width="0dp"
+            android:layout_height="40dp"
+            android:layout_weight="1"
+            android:background="#E2FBF2"
+            android:padding="12dp"
+            android:src="@drawable/ic_send" />
+
+    </LinearLayout>
+
 </android.support.constraint.ConstraintLayout>

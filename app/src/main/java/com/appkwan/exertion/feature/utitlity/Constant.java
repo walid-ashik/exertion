@@ -2,4 +2,5 @@ package com.appkwan.exertion.feature.utitlity;
 
 public class Constant {
     public static final String USER_TYPE_KEY = "userType";
+    public static final String POST_ID_INTENT_KEY = "post_id_key";
 }

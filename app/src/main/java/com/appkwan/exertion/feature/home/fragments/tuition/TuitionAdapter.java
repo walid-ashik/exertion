@@ -15,6 +15,7 @@ import com.appkwan.exertion.R;
 import com.appkwan.exertion.feature.comment.CommentActivity;
 import com.appkwan.exertion.feature.home.User;
 import com.appkwan.exertion.feature.home.fragments.Post;
+import com.appkwan.exertion.feature.utitlity.Constant;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -56,8 +57,9 @@ public class TuitionAdapter extends RecyclerView.Adapter<TuitionAdapter.ViewHold
         holder.setLocation(post.getLocation());
         holder.setBlood(post.getGroup());
 
-        holder.mCommentButton.setOnClickListener( v ->{
+        holder.mCommentButton.setOnClickListener(v -> {
             Intent intent = new Intent(context, CommentActivity.class);
+            intent.putExtra(Constant.POST_ID_INTENT_KEY, post.getPostId());
             context.startActivity(intent);
         });
     }

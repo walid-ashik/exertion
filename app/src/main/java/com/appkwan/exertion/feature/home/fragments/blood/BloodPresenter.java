@@ -36,6 +36,7 @@ public class BloodPresenter {
 
                 for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
                     Post post = snapshot.getValue(Post.class);
+                    post.setPostId(snapshot.getKey());
                     Log.e(TAG, "onDataChange: " + post.getPost());
                     Log.e(TAG, "onDataChange: " + post.getLocation());
                     postList.add(post);

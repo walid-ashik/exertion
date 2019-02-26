@@ -18,5 +18,7 @@
     <color name="almostBlack">#1F1E1E</color>
     <color name="defaultTextColor">#505050</color>
     <color name="userInfoTextColor">#4B4B4B</color>
+    <color name="colorMainBackground">#43CB9B</color>
+    <color name="colorItemBottomActionContainer">#BAF9E3</color>
 
 </resources>
