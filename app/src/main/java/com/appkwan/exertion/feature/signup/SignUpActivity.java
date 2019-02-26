@@ -1,9 +1,13 @@
 package com.appkwan.exertion.feature.signup;
 
+import android.annotation.TargetApi;
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.text.Html;
+import android.text.Spanned;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -33,8 +37,8 @@ public class SignUpActivity extends AppCompatActivity implements SignUpView{
     Button mSignUpButton;
     @BindView(R.id.textView2)
     TextView textView2;
-    @BindView(R.id.textView3)
-    TextView textView3;
+    @BindView(R.id.textviewEmailAllowanceStudent)
+    TextView mTextviewEmailAllowanceStudent;
     @BindView(R.id.textview_privacy_policy)
     TextView mTextviewPrivacyPolicy;
     @BindView(R.id.textView5)
@@ -45,14 +49,23 @@ public class SignUpActivity extends AppCompatActivity implements SignUpView{
 
     private ProgressDialog mProgressDialog;
 
+    @TargetApi(Build.VERSION_CODES.N)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sign_up);
         ButterKnife.bind(this);
 
+
+
         if(getIntent() != null){
             mUserType = getIntent().getStringExtra(Constant.USER_TYPE_KEY);
+        }
+
+        if(mUserType.equals("Student")){
+            mTextviewEmailAllowanceStudent.setText(Html.fromHtml(getResources().getString(R.string.email_allowance)));
+        }else{
+            mTextviewEmailAllowanceStudent.setVisibility(View.GONE);
         }
 
         mPresenter = new SignUpPresenter(this);
@@ -93,6 +106,13 @@ public class SignUpActivity extends AppCompatActivity implements SignUpView{
             mEmail.setHintTextColor(getResources().getColor(R.color.warning));
             mEmail.setHint("Enter email");
             return;
+        }
+
+        if(mUserType.equals("Student")){
+            if( ! email.contains("@diu.edu.bd")){
+                Toast.makeText(this, "You have to use @diu.edu.bd email for registration!", Toast.LENGTH_SHORT).show();
+                return;
+            }
         }
 
         if(password.isEmpty()){
