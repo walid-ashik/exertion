@@ -6,8 +6,10 @@ import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.appkwan.exertion.R;
+import com.appkwan.exertion.feature.home.User;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -16,12 +18,16 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import de.hdodenhof.circleimageview.CircleImageView;
 
-public class ProfileActivity extends AppCompatActivity {
+public class ProfileActivity extends AppCompatActivity implements ProfileView {
 
     @BindView(R.id.toolbar)
     Toolbar toolbar;
     @BindView(R.id.circleImageView)
     CircleImageView circleImageView;
+    @BindView(R.id.mUserNameTextView)
+    TextView mUserNameTextView;
+    @BindView(R.id.mUserTypeTextView)
+    TextView mUserTypeTextView;
     @BindView(R.id.mBloodGroupEditText)
     EditText mBloodGroupEditText;
     @BindView(R.id.mGenderEdiTText)
@@ -50,12 +56,17 @@ public class ProfileActivity extends AppCompatActivity {
     private List<EditText> mAllEditTexts = new ArrayList<>();
     private List<TextView> mEditButtons = new ArrayList<>();
 
+    private ProfilePresenter mPresenter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profile);
         ButterKnife.bind(this);
+
+        mPresenter = new ProfilePresenter(this);
+
+        mPresenter.getUserDetails();
 
         addAllEditTextInList();
         addEditButtonsInList();
@@ -88,7 +99,6 @@ public class ProfileActivity extends AppCompatActivity {
     private void setFocusableFalseEditText() {
         for (EditText editText : mAllEditTexts) {
             editText.setFocusable(false);
-            editText.setText("Random Texts");
         }
     }
 
@@ -100,8 +110,25 @@ public class ProfileActivity extends AppCompatActivity {
     }
 
     private void hideEditButtons() {
-        for(TextView editButton : mEditButtons){
+        for (TextView editButton : mEditButtons) {
             editButton.setVisibility(View.GONE);
         }
+    }
+
+    @Override
+    public void showUserDetails(User user) {
+        mUserNameTextView.setText(user.getName());
+        mUserTypeTextView.setText(user.getUserType());
+        mBloodGroupEditText.setText(user.getBlood());
+        mGenderEdiTText.setText(user.getGender());
+        mEmailEditText.setText(user.getEmail());
+        mPresentAddress.setText(user.getPresentAddress());
+        mPermanentAddress.setText(user.getPermanentAddress());
+        mPhoneNumber.setText(user.getPhone());
+    }
+
+    @Override
+    public void onError(String message) {
+        Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
     }
 }

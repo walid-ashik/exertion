@@ -19,6 +19,7 @@ import com.appkwan.exertion.feature.accountchoice.AccountChoiceActivity;
 import com.appkwan.exertion.feature.home.fragments.blood.BloodFragment;
 import com.appkwan.exertion.feature.home.fragments.tuition.TuitionFragment;
 import com.appkwan.exertion.feature.newpost.NewPostActivity;
+import com.appkwan.exertion.feature.profile.ProfileActivity;
 import com.appkwan.exertion.feature.userinfo.UserInfoActivity;
 
 import butterknife.BindView;
@@ -66,6 +67,9 @@ public class MainActivity extends AppCompatActivity implements MainView {
             case R.id.action_logout:
                 mPresenter.logoutUser();
                 break;
+            case R.id.action_profile:
+                navigateToProfileActivity();
+                break;
         }
         return true;
     }
@@ -89,6 +93,10 @@ public class MainActivity extends AppCompatActivity implements MainView {
     }
     private void initToolBar() {
         setSupportActionBar(toolbar);
+    }
+
+    private void navigateToProfileActivity() {
+        startActivity(new Intent(this, ProfileActivity.class));
     }
 
     public class SectionsPagerAdapter extends FragmentPagerAdapter {
