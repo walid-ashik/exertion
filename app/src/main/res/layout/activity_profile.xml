@@ -33,6 +33,7 @@
             android:layout_width="100dp"
             android:layout_height="100dp"
             android:layout_marginStart="8dp"
+            android:onClick="onEditImageButtonClicked"
             android:layout_marginTop="8dp"
             android:layout_marginEnd="8dp"
             android:src="@drawable/ic_avatar_app"
@@ -41,7 +42,7 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <ImageView
-            android:id="@+id/imageView"
+            android:id="@+id/mEditImageView"
             android:layout_width="25dp"
             android:layout_height="25dp"
             android:layout_marginStart="8dp"

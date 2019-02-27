@@ -1,20 +1,27 @@
 package com.appkwan.exertion.feature.profile;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.constraint.Placeholder;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.appkwan.exertion.R;
+import com.appkwan.exertion.feature.dbhelper.imagehelper.ImageUploader;
+import com.appkwan.exertion.feature.dbhelper.imagehelper.OnImageUploaderListener;
 import com.appkwan.exertion.feature.home.User;
 import com.appkwan.exertion.feature.utitlity.Constant;
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.RequestOptions;
 import com.google.firebase.auth.FirebaseAuth;
 
 import java.util.ArrayList;
@@ -24,8 +31,11 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import de.hdodenhof.circleimageview.CircleImageView;
 
-public class ProfileActivity extends AppCompatActivity implements ProfileView {
+public class ProfileActivity extends AppCompatActivity implements ProfileView, OnImageUploaderListener {
 
+    private static final String TAG = "ProfileActivity";
+
+    private static final int PICK_IMAGE_CODE = 0001;
     @BindView(R.id.toolbar)
     Toolbar toolbar;
     @BindView(R.id.circleImageView)
@@ -58,12 +68,18 @@ public class ProfileActivity extends AppCompatActivity implements ProfileView {
     TextView editPermanentAddress;
     @BindView(R.id.editPhoneButton)
     TextView editPhoneButton;
+    @BindView(R.id.mEditImageView)
+    ImageView mEditImageView;
 
     private List<EditText> mAllEditTexts = new ArrayList<>();
     private List<TextView> mEditButtons = new ArrayList<>();
 
     private ProfilePresenter mPresenter;
+    private ImageUploader mImageUploader;
+
     private String mUserId, mOtherUserId;
+
+    private ProgressDialog mProgressDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -72,10 +88,14 @@ public class ProfileActivity extends AppCompatActivity implements ProfileView {
         ButterKnife.bind(this);
 
         mPresenter = new ProfilePresenter(this);
+        mImageUploader = new ImageUploader(this);
 
         addAllEditTextInList();
         addEditButtonsInList();
         setFocusableFalseEditText();
+
+        mProgressDialog = new ProgressDialog(this);
+        mProgressDialog.setMessage("Please wait...");
 
         if (getIntent().getStringExtra(Constant.USER_ID_KEY) == null) {
             //user itself visits this activity, hence show all edit buttons
@@ -86,6 +106,7 @@ public class ProfileActivity extends AppCompatActivity implements ProfileView {
             //other user
             mOtherUserId = getIntent().getStringExtra(Constant.USER_ID_KEY);
             mPresenter.getUserDetails(mOtherUserId);
+            mEditImageView.setVisibility(View.GONE);
             hideEditButtons();
         }
 
@@ -96,6 +117,13 @@ public class ProfileActivity extends AppCompatActivity implements ProfileView {
     public void editButtonClicked(View view) {
         hideEditButtons();
         setFocusableTrueInEditText();
+    }
+
+    public void onEditImageButtonClicked(View view) {
+        //only this user can change image
+        if (mEditImageView.getVisibility() != View.GONE) {
+            requestImagePicker();
+        }
     }
 
     @Override
@@ -129,7 +157,17 @@ public class ProfileActivity extends AppCompatActivity implements ProfileView {
     }
 
     @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode == PICK_IMAGE_CODE) {
+            //image is selected
+            mProgressDialog.show();
+            uploadImage(data);
+        }
+    }
+
+    @Override
     public void showUserDetails(User user) {
+        loadProfileImage(user.getProfile_image());
         mUserNameTextView.setText(user.getName());
         mUserTypeTextView.setText(user.getUserType());
         mBloodGroupEditText.setText(user.getBlood());
@@ -142,6 +180,25 @@ public class ProfileActivity extends AppCompatActivity implements ProfileView {
 
     @Override
     public void onError(String message) {
+        Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void onImageUrlSavedSuccess() {
+        if (mProgressDialog.isShowing())
+            mProgressDialog.hide();
+    }
+
+    @Override
+    public void onImageUploadedSuccess(String imageUrl) {
+        if (mProgressDialog.isShowing())
+            mProgressDialog.hide();
+        loadProfileImage(imageUrl);
+        mPresenter.saveUserUploadedImageDownloadUrl(imageUrl);
+    }
+
+    @Override
+    public void onImageUploadingError(String message) {
         Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
     }
 
@@ -199,4 +256,23 @@ public class ProfileActivity extends AppCompatActivity implements ProfileView {
     private void sendMessage() {
 
     }
+
+    private void requestImagePicker() {
+        Intent intent = new Intent();
+        intent.setType("image/*");
+        intent.setAction(Intent.ACTION_GET_CONTENT);
+        startActivityForResult(Intent.createChooser(intent, "Select Picture"), PICK_IMAGE_CODE);
+    }
+
+    private void uploadImage(Intent data) {
+        mImageUploader.uploadUserProfileImage(data);
+    }
+
+    private void loadProfileImage(String imageUrl) {
+        Glide.with(getApplicationContext())
+                .load(imageUrl)
+                .apply(RequestOptions.placeholderOf(getResources().getDrawable(R.drawable.ic_avatar_app)))
+                .into(circleImageView);
+    }
+
 }

@@ -6,4 +6,6 @@ public interface ProfileView {
     void showUserDetails(User user);
 
     void onError(String message);
+
+    void onImageUrlSavedSuccess();
 }

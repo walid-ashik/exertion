@@ -9,6 +9,7 @@ public class User {
     private String phone;
     private String presentAddress;
     private String userType;
+    private String profile_image;
 
     public User() {
     }
@@ -77,4 +78,11 @@ public class User {
         this.userType = userType;
     }
 
+    public String getProfile_image() {
+        return profile_image;
+    }
+
+    public void setProfile_image(String profile_image) {
+        this.profile_image = profile_image;
+    }
 }

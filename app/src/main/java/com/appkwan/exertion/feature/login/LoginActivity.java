@@ -51,7 +51,7 @@ public class LoginActivity extends AppCompatActivity implements LoginContract.Vi
         mPresenter = new LoginPresenter(this);
 
         mProgressDialog = new ProgressDialog(this);
-        mProgressDialog.setTitle("Please wait...");
+        mProgressDialog.setMessage("Please wait...");
     }
 
     @OnClick(R.id.mLoginButton)
