@@ -14,6 +14,7 @@ import android.widget.TextView;
 import com.appkwan.exertion.R;
 import com.appkwan.exertion.feature.comment.CommentActivity;
 import com.appkwan.exertion.feature.home.fragments.Post;
+import com.appkwan.exertion.feature.profile.ProfileActivity;
 import com.appkwan.exertion.feature.utitlity.Constant;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -60,6 +61,17 @@ public class BloodAdapter extends RecyclerView.Adapter<BloodAdapter.ViewHolder> 
             context.startActivity(intent);
         });
 
+        holder.mUserImageView.setOnClickListener( v ->{
+            Intent intent = new Intent(context, ProfileActivity.class);
+            intent.putExtra(Constant.USER_ID_KEY, post.getUser_id());
+            context.startActivity(intent);
+        });
+
+        holder.mUserNameTextView.setOnClickListener( v ->{
+            Intent intent = new Intent(context, ProfileActivity.class);
+            intent.putExtra(Constant.USER_ID_KEY, post.getUser_id());
+            context.startActivity(intent);
+        });
     }
 
     @Override

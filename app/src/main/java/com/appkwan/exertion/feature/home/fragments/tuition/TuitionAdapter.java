@@ -69,6 +69,12 @@ public class TuitionAdapter extends RecyclerView.Adapter<TuitionAdapter.ViewHold
             intent.putExtra(Constant.USER_ID_KEY, post.getUser_id());
             context.startActivity(intent);
         });
+
+        holder.mUserNameTextView.setOnClickListener( v ->{
+            Intent intent = new Intent(context, ProfileActivity.class);
+            intent.putExtra(Constant.USER_ID_KEY, post.getUser_id());
+            context.startActivity(intent);
+        });
     }
 
     @Override
