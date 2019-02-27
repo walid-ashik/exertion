@@ -18,6 +18,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.appkwan.exertion.R;
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.RequestOptions;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -114,6 +116,14 @@ public class NewPostActivity extends AppCompatActivity implements NewPostView {
     @Override
     public void showLoader() {
         mProgressDialog.show();
+    }
+
+    @Override
+    public void loadUserImage(String profile_image) {
+        Glide.with(getApplicationContext())
+                .load(profile_image)
+                .apply(RequestOptions.placeholderOf(getApplicationContext().getResources().getDrawable(R.drawable.ic_avatar_app)))
+                .into(mUserImageCircleImageView);
     }
 
     private void saveThePostInDatabase() {

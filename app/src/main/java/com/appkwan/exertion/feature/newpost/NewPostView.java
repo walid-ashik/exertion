@@ -10,4 +10,6 @@ public interface NewPostView {
     void hideLoader();
 
     void showLoader();
+
+    void loadUserImage(String profile_image);
 }

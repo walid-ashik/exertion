@@ -16,6 +16,8 @@ import com.appkwan.exertion.feature.comment.CommentActivity;
 import com.appkwan.exertion.feature.home.fragments.Post;
 import com.appkwan.exertion.feature.profile.ProfileActivity;
 import com.appkwan.exertion.feature.utitlity.Constant;
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.RequestOptions;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -119,6 +121,9 @@ public class BloodAdapter extends RecyclerView.Adapter<BloodAdapter.ViewHolder> 
                     if (dataSnapshot.exists()) {
                         setUserName(dataSnapshot.child("name").getValue().toString());
                     }
+                    if(dataSnapshot.hasChild("profile_image")){
+                        setUserImage(dataSnapshot.child("profile_image").getValue().toString());
+                    }
                 }
 
                 @Override
@@ -139,5 +144,13 @@ public class BloodAdapter extends RecyclerView.Adapter<BloodAdapter.ViewHolder> 
         public void setBlood(String group) {
             mBloodTextView.setText(group);
         }
+
+        private void setUserImage(String imageUrl){
+            Glide.with(context)
+                    .load(imageUrl)
+                    .apply(RequestOptions.placeholderOf(context.getResources().getDrawable(R.drawable.ic_avatar_app)))
+                    .into(mUserImageView);
+        }
+
     }
 }

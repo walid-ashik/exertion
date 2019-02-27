@@ -9,6 +9,8 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.appkwan.exertion.R;
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.RequestOptions;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -75,6 +77,9 @@ public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.ViewHold
                     if (dataSnapshot.exists()) {
                         setUserName(dataSnapshot.child("name").getValue().toString());
                     }
+                    if(dataSnapshot.hasChild("profile_image")){
+                        setUserImage(dataSnapshot.child("profile_image").getValue().toString());
+                    }
                 }
 
                 @Override
@@ -88,5 +93,11 @@ public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.ViewHold
             mUserName.setText(name);
         }
 
+        private void setUserImage(String imageUrl){
+            Glide.with(context)
+                    .load(imageUrl)
+                    .apply(RequestOptions.placeholderOf(context.getResources().getDrawable(R.drawable.ic_avatar_app)))
+                    .into(mUserImage);
+        }
     }
 }

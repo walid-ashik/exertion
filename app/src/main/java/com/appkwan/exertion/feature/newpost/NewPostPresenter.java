@@ -41,6 +41,9 @@ public class NewPostPresenter implements UserInfo {
                 if(dataSnapshot.hasChild("name")){
                     view.showUserName(dataSnapshot.child("name").getValue().toString());
                 }
+                if(dataSnapshot.hasChild("profile_image")){
+                    view.loadUserImage(dataSnapshot.child("profile_image").getValue().toString());
+                }
             }
 
             @Override
