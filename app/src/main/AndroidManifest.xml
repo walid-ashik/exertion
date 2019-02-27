@@ -14,7 +14,6 @@
         android:supportsRtl="true"
         android:theme="@style/MyMaterialTheme"
         tools:ignore="GoogleAppIndexingWarning">
-        <activity android:name=".feature.comment.CommentActivity"></activity>
         <activity android:name=".feature.splash.SplashActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -23,9 +22,11 @@
             </intent-filter>
         </activity>
         <activity android:name=".feature.home.MainActivity" />
+        <activity android:name=".feature.comment.CommentActivity"></activity>
         <activity android:name=".feature.userinfo.UserInfoActivity" />
         <activity android:name=".feature.newpost.NewPostActivity" />
-        <activity android:name=".feature.profile.ProfileActivity" />
+        <activity android:name=".feature.profile.ProfileActivity"
+            android:parentActivityName=".feature.home.MainActivity"/>
         <activity android:name=".feature.accountchoice.AccountChoiceActivity" />
         <activity android:name=".feature.signup.SignUpActivity" />
         <activity android:name=".feature.login.LoginActivity" />

@@ -13,15 +13,13 @@ import com.google.firebase.database.ValueEventListener;
 public class ProfilePresenter {
     ProfileView mView;
     private DatabaseReference mRootRef;
-    private String mUserId;
     public ProfilePresenter(ProfileView mView) {
         this.mView = mView;
         mRootRef = FirebaseDatabase.getInstance().getReference().child("Users");
-        mUserId = FirebaseAuth.getInstance().getCurrentUser().getUid();
     }
 
-    public void getUserDetails() {
-        mRootRef.child(mUserId).addValueEventListener(new ValueEventListener() {
+    public void getUserDetails(String userId) {
+        mRootRef.child(userId).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 if(dataSnapshot.exists()){
