@@ -26,9 +26,15 @@ public class SplashActivity extends AppCompatActivity implements SplashContract.
 
     @Override
     public void navigateToLoginActivity() {
-        startActivity(new Intent(this, LoginActivity.class));
-        finish();
-        return;
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                startActivity(new Intent(SplashActivity.this, LoginActivity.class));
+                finish();
+                return;
+            }
+        }, 1000);
+
     }
 
     @Override

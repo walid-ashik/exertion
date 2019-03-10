@@ -94,10 +94,9 @@ public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.ViewHold
         }
 
         private void setUserImage(String imageUrl){
-            Glide.with(context)
-                    .load(imageUrl)
-                    .apply(RequestOptions.placeholderOf(context.getResources().getDrawable(R.drawable.ic_avatar_app)))
-                    .into(mUserImage);
+
+
+
         }
     }
 }
