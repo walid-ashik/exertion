@@ -14,7 +14,8 @@
         android:supportsRtl="true"
         android:theme="@style/MyMaterialTheme"
         tools:ignore="GoogleAppIndexingWarning">
-        <activity android:name=".feature.signup.MobileSignUpActivity"></activity>
+        <activity android:name=".feature.signup.otpsignup.MobileSignInActivity"></activity>
+        <activity android:name=".feature.signup.otpsignup.MobileSignUpActivity" />
         <activity android:name=".feature.splash.SplashActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

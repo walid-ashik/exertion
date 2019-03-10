@@ -1,13 +1,18 @@
 package com.appkwan.exertion.feature.login;
 
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -16,6 +21,7 @@ import com.appkwan.exertion.feature.accountchoice.AccountChoiceActivity;
 import com.appkwan.exertion.feature.home.MainActivity;
 import com.appkwan.exertion.feature.signup.SignUpActivity;
 import com.appkwan.exertion.feature.signup.SignUpPresenter;
+import com.appkwan.exertion.feature.signup.otpsignup.MobileSignInActivity;
 import com.google.android.gms.common.oob.SignUp;
 
 import butterknife.BindView;
@@ -81,7 +87,7 @@ public class LoginActivity extends AppCompatActivity implements LoginContract.Vi
 
     @OnClick(R.id.mPhoneRegistrationButton)
     public void loginWithPhoneClicked(View view){
-        Toast.makeText(this, "Under development!", Toast.LENGTH_SHORT).show();
+        startActivity(new Intent(this, MobileSignInActivity.class));
     }
 
     @OnClick(R.id.mDontHaveAccount)
@@ -110,4 +116,5 @@ public class LoginActivity extends AppCompatActivity implements LoginContract.Vi
     public void hideLoader() {
         mProgressDialog.hide();
     }
+
 }

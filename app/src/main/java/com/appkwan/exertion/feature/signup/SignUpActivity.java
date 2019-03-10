@@ -2,16 +2,11 @@ package com.appkwan.exertion.feature.signup;
 
 import android.annotation.TargetApi;
 import android.app.ProgressDialog;
-import android.content.Context;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.AppCompatButton;
 import android.text.Html;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -21,16 +16,9 @@ import android.widget.Toast;
 
 import com.appkwan.exertion.R;
 import com.appkwan.exertion.feature.home.MainActivity;
+import com.appkwan.exertion.feature.signup.otpsignup.MobileSignUpActivity;
 import com.appkwan.exertion.feature.utitlity.Constant;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
-import com.google.firebase.FirebaseException;
-import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.PhoneAuthCredential;
-import com.google.firebase.auth.PhoneAuthProvider;
-
-import java.util.concurrent.TimeUnit;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -157,7 +145,9 @@ public class SignUpActivity extends AppCompatActivity implements SignUpView{
 
     @OnClick(R.id.mPhoneRegistrationButton)
     public void sendToMobileSignUpActivity(){
-       startActivity(new Intent(this, MobileSignUpActivity.class));
+       Intent intent = new Intent(this, MobileSignUpActivity.class);
+       intent.putExtra(Constant.USER_TYPE_KEY, mUserType);
+       startActivity(intent);
     }
 
 }

@@ -1,4 +1,4 @@
-package com.appkwan.exertion.feature.signup;
+package com.appkwan.exertion.feature.signup.otpsignup;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
@@ -13,6 +13,7 @@ import android.widget.Toast;
 
 import com.appkwan.exertion.R;
 import com.appkwan.exertion.feature.home.MainActivity;
+import com.appkwan.exertion.feature.utitlity.Constant;
 import com.google.firebase.FirebaseException;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.PhoneAuthCredential;
@@ -24,7 +25,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
-public class MobileSignUpActivity extends AppCompatActivity {
+public class MobileSignUpActivity extends AppCompatActivity implements MobileSignUpView {
 
     @BindView(R.id.textView3)
     TextView textView3;
@@ -46,14 +47,23 @@ public class MobileSignUpActivity extends AppCompatActivity {
 
     private ProgressDialog mProgressDialog;
 
+    private MobileSignUpPresenter mPresenter;
+    private String mUserType = "";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_mobile_sign_up);
         ButterKnife.bind(this);
-        mAuth = FirebaseAuth.getInstance();
 
+        if(getIntent() != null){
+            mUserType = getIntent().getStringExtra(Constant.USER_TYPE_KEY);
+        }
+
+        mAuth = FirebaseAuth.getInstance();
+        mPresenter = new MobileSignUpPresenter(this);
         mProgressDialog = new ProgressDialog(this);
+        mProgressDialog.setCancelable(false);
         mProgressDialog.setMessage("Please wait...");
     }
 
@@ -67,8 +77,10 @@ public class MobileSignUpActivity extends AppCompatActivity {
             return;
         }
 
+        mProgressDialog.show();
+
         PhoneAuthProvider.getInstance().verifyPhoneNumber(
-               "+880g" +  phoneNumber,        // Phone number to verify
+               "+880" +  phoneNumber,        // Phone number to verify
                 60,                 // Timeout duration
                 TimeUnit.SECONDS,   // Unit of timeout
                 this,               // Activity (for callback binding)
@@ -106,6 +118,9 @@ public class MobileSignUpActivity extends AppCompatActivity {
 
         @Override
         public void onVerificationCompleted(PhoneAuthCredential phoneAuthCredential) {
+
+            mProgressDialog.hide();
+
             String code = phoneAuthCredential.getSmsCode();
             if (code != null) {
                 mProgressDialog.show();
@@ -115,6 +130,7 @@ public class MobileSignUpActivity extends AppCompatActivity {
 
         @Override
         public void onVerificationFailed(FirebaseException e) {
+            mProgressDialog.hide();
             Toast.makeText(MobileSignUpActivity.this, e.getMessage(), Toast.LENGTH_SHORT).show();
         }
     };
@@ -131,11 +147,12 @@ public class MobileSignUpActivity extends AppCompatActivity {
 
                     if (task.isSuccessful()) {
 
+                        String userId = FirebaseAuth.getInstance().getCurrentUser().getUid();
+
                         mProgressDialog.hide();
 
-                        Intent intent = new Intent(MobileSignUpActivity.this, MainActivity.class);
-                        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-                        startActivity(intent);
+                        mPresenter.saveUserInfo(userId, mUserType);
+
                     } else {
                         Toast.makeText(this, task.getException().getMessage(), Toast.LENGTH_SHORT).show();
                     }
@@ -144,4 +161,25 @@ public class MobileSignUpActivity extends AppCompatActivity {
 
     }
 
+    @Override
+    public void navigateToMainActivity() {
+        Intent intent = new Intent(MobileSignUpActivity.this, MainActivity.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        startActivity(intent);
+    }
+
+    @Override
+    public void onError(String error) {
+        Toast.makeText(this, error, Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void showLoader() {
+        mProgressDialog.show();
+    }
+
+    @Override
+    public void hideLoader() {
+        mProgressDialog.hide();
+    }
 }
