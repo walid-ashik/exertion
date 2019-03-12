@@ -14,6 +14,7 @@ import android.widget.TextView;
 import com.appkwan.exertion.R;
 import com.appkwan.exertion.feature.comment.CommentActivity;
 import com.appkwan.exertion.feature.home.fragments.Post;
+import com.appkwan.exertion.feature.message.MessageActivity;
 import com.appkwan.exertion.feature.profile.ProfileActivity;
 import com.appkwan.exertion.feature.utitlity.Constant;
 import com.bumptech.glide.Glide;
@@ -60,6 +61,13 @@ public class BloodAdapter extends RecyclerView.Adapter<BloodAdapter.ViewHolder> 
         holder.mCommentButton.setOnClickListener( v ->{
             Intent intent = new Intent(context, CommentActivity.class);
             intent.putExtra(Constant.POST_ID_INTENT_KEY, post.getPostId());
+            context.startActivity(intent);
+        });
+
+        holder.mSendButton.setOnClickListener(v ->{
+            Intent intent = new Intent(context, MessageActivity.class);
+            intent.putExtra(Constant.POST_ID_INTENT_KEY, post.getPostId());
+            intent.putExtra(Constant.POST_TYPE_KEY, "Blood");
             context.startActivity(intent);
         });
 
