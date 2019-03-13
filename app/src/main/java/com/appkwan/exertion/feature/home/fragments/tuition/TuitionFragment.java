@@ -65,9 +65,6 @@ public class TuitionFragment extends Fragment implements TuitionView {
 
     @Override
     public void onPostLoaded(List<Post> postList) {
-
-        Collections.reverse(postList);
-
         mAdapter = new TuitionAdapter(postList, getContext());
         mTuitionRecyclerView.setAdapter(mAdapter);
         mAdapter.notifyDataSetChanged();
@@ -79,7 +76,8 @@ public class TuitionFragment extends Fragment implements TuitionView {
     }
 
     private void initRecyclerView(View view) {
-        RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false);
+        RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, true);
+        ((LinearLayoutManager) mLayoutManager).setStackFromEnd(true);
         mTuitionRecyclerView.setLayoutManager(mLayoutManager);
         mTuitionRecyclerView.setItemAnimator(new DefaultItemAnimator());
     }

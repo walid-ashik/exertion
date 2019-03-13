@@ -29,7 +29,7 @@
             android:layout_marginEnd="8dp"
             android:layout_marginBottom="8dp"
             android:text="TextView"
-            android:maxWidth="300dp"
+            android:maxWidth="200dp"
             android:textColor="@color/colorWhite"
             android:textSize="12sp"
             app:layout_constraintBottom_toBottomOf="parent"
