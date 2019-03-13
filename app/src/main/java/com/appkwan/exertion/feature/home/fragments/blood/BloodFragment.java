@@ -77,7 +77,8 @@ public class BloodFragment extends Fragment implements BloodView {
 
 
     private void initRecyclerView(View view) {
-        RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false);
+        RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, true);
+        ((LinearLayoutManager) mLayoutManager).setStackFromEnd(true);
         mBloodRecyclerView.setLayoutManager(mLayoutManager);
         mBloodRecyclerView.setItemAnimator(new DefaultItemAnimator());
     }
