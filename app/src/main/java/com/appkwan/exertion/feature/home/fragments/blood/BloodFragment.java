@@ -75,7 +75,6 @@ public class BloodFragment extends Fragment implements BloodView {
         Toast.makeText(getContext(), message, Toast.LENGTH_SHORT).show();
     }
 
-
     private void initRecyclerView(View view) {
         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, true);
         ((LinearLayoutManager) mLayoutManager).setStackFromEnd(true);

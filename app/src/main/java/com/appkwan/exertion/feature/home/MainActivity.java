@@ -18,6 +18,7 @@ import com.appkwan.exertion.R;
 import com.appkwan.exertion.feature.accountchoice.AccountChoiceActivity;
 import com.appkwan.exertion.feature.home.fragments.blood.BloodFragment;
 import com.appkwan.exertion.feature.home.fragments.tuition.TuitionFragment;
+import com.appkwan.exertion.feature.message.allmessage.AllMessageActivity;
 import com.appkwan.exertion.feature.newpost.NewPostActivity;
 import com.appkwan.exertion.feature.profile.ProfileActivity;
 import com.appkwan.exertion.feature.userinfo.UserInfoActivity;
@@ -70,6 +71,9 @@ public class MainActivity extends AppCompatActivity implements MainView {
             case R.id.action_profile:
                 navigateToProfileActivity();
                 break;
+            case R.id.action_messages:
+                navigateToMessagesActivity();
+                break;
         }
         return true;
     }
@@ -97,6 +101,10 @@ public class MainActivity extends AppCompatActivity implements MainView {
 
     private void navigateToProfileActivity() {
         startActivity(new Intent(this, ProfileActivity.class));
+    }
+
+    private void navigateToMessagesActivity(){
+        startActivity(new Intent(this, AllMessageActivity.class));
     }
 
     public class SectionsPagerAdapter extends FragmentPagerAdapter {

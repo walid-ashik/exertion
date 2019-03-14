@@ -1,5 +1,6 @@
 package com.appkwan.exertion.feature.message;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
@@ -14,6 +15,7 @@ import android.widget.TextView;
 import com.appkwan.exertion.R;
 import com.appkwan.exertion.feature.home.User;
 import com.appkwan.exertion.feature.message.model.Message;
+import com.appkwan.exertion.feature.profile.ProfileActivity;
 import com.appkwan.exertion.feature.utitlity.Constant;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
@@ -50,6 +52,7 @@ public class MessageActivity extends AppCompatActivity implements MessageView{
     private String mPostType;
     private String mMessageThreadId = "";
     private MessageAdapter mMessageAdapter;
+    private String mMessagingUserId = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -69,6 +72,8 @@ public class MessageActivity extends AppCompatActivity implements MessageView{
 
     @Override
     public void onMessagingUserIdLoaded(String messagingUserId) {
+        mMessagingUserId = messagingUserId;
+
         mPresenter.getMessageUserDetaild(messagingUserId);
         mPresenter.getMessageThreadId(messagingUserId);
     }
@@ -125,6 +130,30 @@ public class MessageActivity extends AppCompatActivity implements MessageView{
 
         mPresenter.saveNewMessage(mMessageThreadId, message);
 
+    }
+
+    @OnClick({R.id.mBackImageButton, R.id.mUserImage, R.id.mUserNameTv})
+    public void onButtonClicked(View view){
+        switch (view.getId()){
+            case R.id.mBackImageButton :
+                onBackPressed();
+                break;
+
+            case R.id.mUserImage:
+                sendToUserProfile(mMessagingUserId);
+                break;
+
+            case R.id.mUserNameTv:
+                sendToUserProfile(mMessagingUserId);
+                break;
+
+        }
+    }
+
+    private void sendToUserProfile(String mMessagingUserId) {
+        Intent intent = new Intent(this, ProfileActivity.class);
+        intent.putExtra(Constant.USER_ID_KEY, mMessagingUserId);
+        startActivity(intent);
     }
 
     private void initRecyclerView() {
