@@ -14,10 +14,6 @@
         android:supportsRtl="true"
         android:theme="@style/MyMaterialTheme"
         tools:ignore="GoogleAppIndexingWarning">
-        <activity android:name=".feature.message.allmessage.AllMessageActivity"></activity>
-        <activity android:name=".feature.message.MessageActivity" />
-        <activity android:name=".feature.signup.otpsignup.MobileSignInActivity" />
-        <activity android:name=".feature.signup.otpsignup.MobileSignUpActivity" />
         <activity android:name=".feature.splash.SplashActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -35,6 +31,13 @@
         <activity android:name=".feature.accountchoice.AccountChoiceActivity" />
         <activity android:name=".feature.signup.SignUpActivity" />
         <activity android:name=".feature.login.LoginActivity" />
+
+        <activity android:name=".feature.message.allmessage.AllMessageActivity"
+            android:parentActivityName=".feature.home.MainActivity"/>
+        <activity android:name=".feature.message.MessageActivity" />
+        <activity android:name=".feature.signup.otpsignup.MobileSignInActivity" />
+        <activity android:name=".feature.signup.otpsignup.MobileSignUpActivity" />
+
     </application>
 
 </manifest>
