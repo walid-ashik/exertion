@@ -47,6 +47,14 @@ public class AllMessageActivity extends AppCompatActivity implements AllMessageV
         mPresenter.getMessagedUserList(mUserId);
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if(mAllMessageAdapter != null){
+            mAllMessageAdapter.notifyDataSetChanged();
+        }
+    }
+
     private void initToolBar() {
         setSupportActionBar(toolbar);
         getSupportActionBar().setTitle("Messages");
@@ -70,7 +78,7 @@ public class AllMessageActivity extends AppCompatActivity implements AllMessageV
     }
 
     @Override
-    public void onMessageThreadAdded(ArrayList<String> mMessageThreadList) {
+    public void onMessageThreadAdded(ArrayList<String> mMessageThreadList, String messagedUserId) {
 
         for (String thread : mMessageThreadList) {
             Log.e(TAG, "onMessageThreadAdded: " + thread);
@@ -79,7 +87,7 @@ public class AllMessageActivity extends AppCompatActivity implements AllMessageV
                     .child(thread)
                     .limitToLast(1);
         }
-        mPresenter.getLastMessage(query);
+        mPresenter.getLastMessage(query, messagedUserId);
     }
 
 

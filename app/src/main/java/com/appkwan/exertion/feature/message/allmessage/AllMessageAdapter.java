@@ -1,6 +1,7 @@
 package com.appkwan.exertion.feature.message.allmessage;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Typeface;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
@@ -11,7 +12,9 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.appkwan.exertion.R;
+import com.appkwan.exertion.feature.message.MessageActivity;
 import com.appkwan.exertion.feature.message.model.Message;
+import com.appkwan.exertion.feature.utitlity.Constant;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 import com.google.firebase.database.DataSnapshot;
@@ -53,7 +56,11 @@ public class AllMessageAdapter extends RecyclerView.Adapter<AllMessageAdapter.Vi
         holder.getUserNameFromDatabase(message.getUserId());
         holder.mLastMessageTextView.setText(message.getMessage());
 
-        Log.e(TAG, "onBindViewHolder: " + message.getUserId());
+        holder.itemView.setOnClickListener(v -> {
+            Intent intent = new Intent(mContext, MessageActivity.class);
+            intent.putExtra(Constant.USER_ID_KEY, message.getUserId());
+            mContext.startActivity(intent);
+        });
     }
 
     @Override

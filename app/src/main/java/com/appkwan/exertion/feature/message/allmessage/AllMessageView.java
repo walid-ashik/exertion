@@ -7,7 +7,7 @@ import java.util.ArrayList;
 public interface AllMessageView {
     void onMessagedUserListLoaded(ArrayList<String> mMessageThreadList);
 
-    void onMessageThreadAdded(ArrayList<String> mMessageThreadList);
+    void onMessageThreadAdded(ArrayList<String> mMessageThreadList, String messagedUserId);
 
     void onLastMessageLoaded(Message message);
 }

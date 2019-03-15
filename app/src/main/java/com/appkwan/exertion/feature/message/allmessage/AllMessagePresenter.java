@@ -70,7 +70,7 @@ public class AllMessagePresenter {
                             for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
                                 mMessageThreadList.add(snapshot.getKey());
                             }
-                            mView.onMessageThreadAdded(mMessageThreadList);
+                            mView.onMessageThreadAdded(mMessageThreadList, messagedUserId);
                         }
                     }
 
@@ -81,7 +81,7 @@ public class AllMessagePresenter {
                 });
     }
 
-    public void getLastMessage(Query query) {
+    public void getLastMessage(Query query, String messagedUserId) {
         query.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
@@ -90,6 +90,7 @@ public class AllMessagePresenter {
                     for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
 
                         Message message = snapshot.getValue(Message.class);
+                        message.setUserId(messagedUserId);
                         mView.onLastMessageLoaded(message);
                     }
                 }

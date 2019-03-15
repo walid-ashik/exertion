@@ -48,11 +48,12 @@ public class MessageActivity extends AppCompatActivity implements MessageView{
 
     private MessagePresenter mPresenter;
 
-    private String mPostId;
-    private String mPostType;
+    private String mPostId = "";
+    private String mPostType = "";
     private String mMessageThreadId = "";
     private MessageAdapter mMessageAdapter;
     private String mMessagingUserId = "";
+    private String mMessagingUserIdFromIntent = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -64,9 +65,17 @@ public class MessageActivity extends AppCompatActivity implements MessageView{
         initRecyclerView();
 
         if(getIntent().getExtras() != null){
-            mPostId = getIntent().getStringExtra(Constant.POST_ID_INTENT_KEY);
-            mPostType = getIntent().getStringExtra(Constant.POST_TYPE_KEY);
-            mPresenter.getUserId(mPostType, mPostId);
+
+            //intents are coming from two activity's adapter so check for every adapter
+            if(getIntent().getStringExtra(Constant.POST_ID_INTENT_KEY) != null || getIntent().getStringExtra(Constant.POST_TYPE_KEY) != null){
+                mPostId = getIntent().getStringExtra(Constant.POST_ID_INTENT_KEY);
+                mPostType = getIntent().getStringExtra(Constant.POST_TYPE_KEY);
+                mPresenter.getUserId(mPostType, mPostId);
+            }else if(getIntent().getStringExtra(Constant.USER_ID_KEY) != null ){
+                mMessagingUserIdFromIntent = getIntent().getStringExtra(Constant.USER_ID_KEY);
+                mPresenter.getMessageUserDetaild(mMessagingUserIdFromIntent);
+                mPresenter.getMessageThreadId(mMessagingUserIdFromIntent);
+            }
         }
     }
 
