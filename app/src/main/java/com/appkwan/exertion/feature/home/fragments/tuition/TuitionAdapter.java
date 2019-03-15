@@ -37,10 +37,13 @@ public class TuitionAdapter extends RecyclerView.Adapter<TuitionAdapter.ViewHold
 
     private List<Post> postList;
     private Context context;
+    private DatabaseReference mCommentRef;
+    String totalComment = "";
 
     public TuitionAdapter(List<Post> postList, Context context) {
         this.postList = postList;
         this.context = context;
+        mCommentRef = FirebaseDatabase.getInstance().getReference().child("Comments");
     }
 
     @NonNull
@@ -60,6 +63,9 @@ public class TuitionAdapter extends RecyclerView.Adapter<TuitionAdapter.ViewHold
         holder.getUserNameFromDatabase(post.getUser_id());
         holder.setLocation(post.getLocation());
         holder.setBlood(post.getGroup());
+
+        holder.setIsRecyclable(false);
+        holder.setPostCommentCount(post.getPostId());
 
         holder.mCommentButton.setOnClickListener(v -> {
             Intent intent = new Intent(context, CommentActivity.class);
@@ -103,6 +109,8 @@ public class TuitionAdapter extends RecyclerView.Adapter<TuitionAdapter.ViewHold
         ImageView imageView4;
         @BindView(R.id.mLocationTextView)
         TextView mLocationTextView;
+        @BindView(R.id.mCommentCountTextView)
+        TextView mCommentCountTextView;
         @BindView(R.id.mBloodIconImageView)
         ImageView mBloodIconImageView;
         @BindView(R.id.mBloodTextView)
@@ -166,6 +174,31 @@ public class TuitionAdapter extends RecyclerView.Adapter<TuitionAdapter.ViewHold
                     .load(imageUrl)
                     .apply(RequestOptions.placeholderOf(context.getResources().getDrawable(R.drawable.ic_avatar_app)))
                     .into(mUserImageView);
+        }
+
+        public void setPostCommentCount(String postId) {
+
+            mCommentRef.child(postId)
+                    .addValueEventListener(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                            if(dataSnapshot.exists()){
+                                totalComment = String.valueOf(dataSnapshot.getChildrenCount());
+                                if(totalComment.isEmpty()){
+                                    mCommentCountTextView.setVisibility(View.GONE);
+                                }else{
+                                    mCommentCountTextView.setVisibility(View.VISIBLE);
+                                    mCommentCountTextView.setText("(" + totalComment + ")");
+                                }
+                                totalComment = "";
+                            }
+                        }
+
+                        @Override
+                        public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                        }
+                    });
         }
     }
 }

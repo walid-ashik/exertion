@@ -35,10 +35,13 @@ public class BloodAdapter extends RecyclerView.Adapter<BloodAdapter.ViewHolder> 
 
     private List<Post> postList;
     private Context context;
+    private DatabaseReference mCommentRef;
+    String totalComment = "";
 
     public BloodAdapter(List<Post> postList, Context context) {
         this.postList = postList;
         this.context = context;
+        mCommentRef = FirebaseDatabase.getInstance().getReference().child("Comments");
     }
 
     @NonNull
@@ -57,6 +60,9 @@ public class BloodAdapter extends RecyclerView.Adapter<BloodAdapter.ViewHolder> 
         holder.getUserNameFromDatabase(post.getUser_id());
         holder.setLocation(post.getLocation());
         holder.setBlood(post.getGroup());
+
+        holder.setIsRecyclable(false);
+        holder.setPostCommentCount(post.getPostId());
 
         holder.mCommentButton.setOnClickListener( v ->{
             Intent intent = new Intent(context, CommentActivity.class);
@@ -105,6 +111,8 @@ public class BloodAdapter extends RecyclerView.Adapter<BloodAdapter.ViewHolder> 
         TextView mBloodTextView;
         @BindView(R.id.mPostTextVIew)
         TextView mPostTextVIew;
+        @BindView(R.id.mCommentCountTextView)
+        TextView mCommentCountTextView;
         @BindView(R.id.mCommentButton)
         LinearLayout mCommentButton;
         @BindView(R.id.mSendButton)
@@ -160,5 +168,29 @@ public class BloodAdapter extends RecyclerView.Adapter<BloodAdapter.ViewHolder> 
                     .into(mUserImageView);
         }
 
+        public void setPostCommentCount(String postId) {
+
+            mCommentRef.child(postId)
+                    .addValueEventListener(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                            if(dataSnapshot.exists()){
+                                totalComment = String.valueOf(dataSnapshot.getChildrenCount());
+                                if(totalComment.isEmpty()){
+                                    mCommentCountTextView.setVisibility(View.GONE);
+                                }else{
+                                    mCommentCountTextView.setVisibility(View.VISIBLE);
+                                    mCommentCountTextView.setText("(" + totalComment + ")");
+                                }
+                                totalComment = "";
+                            }
+                        }
+
+                        @Override
+                        public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                        }
+                    });
+        }
     }
 }
