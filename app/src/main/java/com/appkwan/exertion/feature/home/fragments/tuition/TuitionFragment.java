@@ -84,9 +84,12 @@ public class TuitionFragment extends Fragment implements TuitionView, OnSearchTe
     }
 
     @Subscribe
-    public void onEvent(SearchLocationEvent searchLocationEvent) {
-        if (searchLocationEvent.isSearchTypeTuition()) {
-            mPresenter.queryLocation(searchLocationEvent.getSearchText());
+    public void onEvent(SearchLocationEvent searchEvent) {
+
+        if(searchEvent.getSearchType().equals("Location")){
+           mPresenter.querySearch("query_location", searchEvent.getSearchText());
+        }else if(searchEvent.getSearchType().equals("Subject")){
+            mPresenter.querySearch("query_subject", searchEvent.getSearchText());
         }
     }
 

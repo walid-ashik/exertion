@@ -19,8 +19,6 @@ import com.appkwan.exertion.feature.home.MainActivity;
 import com.appkwan.exertion.feature.home.OnSearchTextListener;
 import com.appkwan.exertion.feature.home.SearchLocationEvent;
 import com.appkwan.exertion.feature.home.fragments.Post;
-import com.appkwan.exertion.feature.home.fragments.tuition.TuitionAdapter;
-import com.appkwan.exertion.feature.home.fragments.tuition.TuitionPresenter;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -74,9 +72,11 @@ public class BloodFragment extends Fragment implements BloodView, OnSearchTextLi
     }
 
     @Subscribe
-    public void onEvent(SearchLocationEvent searchLocationEvent){
-        if( ! searchLocationEvent.isSearchTypeTuition()){
-            mPresenter.queryLocation( searchLocationEvent.getSearchText());
+    public void onEvent(SearchLocationEvent searchEvent){
+        if(searchEvent.getSearchType().equals("Area")){
+            mPresenter.querySearch("query_location", searchEvent.getSearchText());
+        }else if(searchEvent.getSearchType().equals("Blood Group")){
+            mPresenter.querySearch("query_group", searchEvent.getSearchText());
         }
     }
 

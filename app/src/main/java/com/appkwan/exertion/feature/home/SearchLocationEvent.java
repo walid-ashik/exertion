@@ -2,7 +2,7 @@ package com.appkwan.exertion.feature.home;
 
 public class SearchLocationEvent {
      String searchText;
-     boolean searchTypeTuition;
+     String searchType;
 
     public String getSearchText() {
         return searchText;
@@ -12,11 +12,11 @@ public class SearchLocationEvent {
         this.searchText = searchText;
     }
 
-    public boolean isSearchTypeTuition() {
-        return searchTypeTuition;
+    public String getSearchType() {
+        return searchType;
     }
 
-    public void setSearchTypeTuition(boolean searchTypeTuition) {
-        this.searchTypeTuition = searchTypeTuition;
+    public void setSearchType(String searchType) {
+        this.searchType = searchType;
     }
 }

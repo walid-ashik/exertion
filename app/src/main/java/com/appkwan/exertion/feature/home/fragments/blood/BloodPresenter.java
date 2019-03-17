@@ -50,8 +50,8 @@ public class BloodPresenter {
         });
     }
 
-    public void queryLocation(String queryLocation) {
-        Query query = mRootDataRef.orderByChild("query_location")
+    public void querySearch(String searchChild, String queryLocation) {
+        Query query = mRootDataRef.orderByChild(searchChild)
                 .startAt(queryLocation)
                 .endAt(queryLocation + "\uf8ff");
 
@@ -75,7 +75,6 @@ public class BloodPresenter {
 
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
-
             }
         });
     }

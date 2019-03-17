@@ -17,7 +17,6 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.Toast;
 
 import com.appkwan.exertion.R;
 import com.appkwan.exertion.feature.accountchoice.AccountChoiceActivity;
@@ -29,7 +28,6 @@ import com.appkwan.exertion.feature.profile.ProfileActivity;
 import com.appkwan.exertion.feature.userinfo.UserInfoActivity;
 
 import org.greenrobot.eventbus.EventBus;
-import org.greenrobot.eventbus.Subscribe;
 
 import java.util.List;
 
@@ -96,18 +94,45 @@ public class MainActivity extends AppCompatActivity implements MainView {
                 navigateToMessagesActivity();
                 break;
             case R.id.action_search:
-                showSearchDialog();
+                decideWhicheSearchUserWants();
                 break;
         }
         return true;
     }
 
-    private void showSearchDialog() {
+    @SuppressLint("RestrictedApi")
+    private void decideWhicheSearchUserWants() {
+        //TUITION Fragment
+        if (getSupportFragmentManager().getFragments().get(0).isMenuVisible()) {
+            showUserCustomerSearchDialog("Subject", "Location");
+        }
+
+        //BLOOD Fragment
+        if (getSupportFragmentManager().getFragments().get(1).isMenuVisible()) {
+            showUserCustomerSearchDialog("Blood Group", "Area");
+        }
+    }
+
+    private void showUserCustomerSearchDialog(String subject_group_search_text, String location) {
+        new AlertDialog.Builder(this)
+                .setMessage("Select what you want to search?")
+                .setPositiveButton(subject_group_search_text, (dialog, which) -> {
+                    showSearchDialog(subject_group_search_text);
+                })
+                .setNegativeButton(location, (dialog, which) -> {
+                    showSearchDialog(location);
+                })
+                .setIcon(android.R.drawable.ic_dialog_alert)
+                .show();
+    }
+
+    private void showSearchDialog(String searchType) {
 
         AlertDialog.Builder mBuilder = new AlertDialog.Builder(MainActivity.this);
         View mView = getLayoutInflater().inflate(R.layout.item_search_layout, null);
 
         final EditText mSearchArea = mView.findViewById(R.id.searchArea);
+        mSearchArea.setHint("Enter your " + searchType);
         Button mSearchButton = mView.findViewById(R.id.searchButtonSearch);
 
         mBuilder.setView(mView);
@@ -115,22 +140,22 @@ public class MainActivity extends AppCompatActivity implements MainView {
         dialog.show();
 
         mSearchButton.setOnClickListener(view -> {
-           String queryLocation = mSearchArea.getText().toString().trim();
-           postSearchQueryEvent(queryLocation);
-           dialog.hide();
+            String queryText = mSearchArea.getText().toString().trim();
+            postSearchQueryEvent(queryText, searchType);
+            dialog.hide();
         });
 
     }
 
     @SuppressLint("RestrictedApi")
-    private void postSearchQueryEvent(String queryLocation) {
+    private void postSearchQueryEvent(String queryText, String queryType) {
         SearchLocationEvent event = new SearchLocationEvent();
-        event.setSearchText(queryLocation.toLowerCase());
+        event.setSearchText(queryText.toLowerCase());
 
-        if(getSupportFragmentManager().getFragments().get(0).isMenuVisible()){
-            event.setSearchTypeTuition(true);
-        }else{
-            event.setSearchTypeTuition(false);
+        if (getSupportFragmentManager().getFragments().get(0).isMenuVisible()) {
+            event.setSearchType(queryType);
+        } else {
+            event.setSearchType(queryType);
         }
 
         EventBus.getDefault().post(event);
