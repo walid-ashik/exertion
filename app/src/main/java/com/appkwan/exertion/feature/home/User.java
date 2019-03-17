@@ -10,10 +10,10 @@ public class User {
     private String presentAddress;
     private String userType;
     private String profile_image;
+    private String cv;
 
     public User() {
     }
-
 
     public String getBlood() {
         return blood;
@@ -85,4 +85,13 @@ public class User {
     public void setProfile_image(String profile_image) {
         this.profile_image = profile_image;
     }
+
+    public String getCv() {
+        return cv;
+    }
+
+    public void setCv(String cv) {
+        this.cv = cv;
+    }
+
 }

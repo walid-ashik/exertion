@@ -1,5 +1,7 @@
 package com.appkwan.exertion.feature.home;
 
+import android.annotation.SuppressLint;
+import android.app.AlertDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
@@ -13,6 +15,9 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.Toast;
 
 import com.appkwan.exertion.R;
 import com.appkwan.exertion.feature.accountchoice.AccountChoiceActivity;
@@ -22,6 +27,11 @@ import com.appkwan.exertion.feature.message.allmessage.AllMessageActivity;
 import com.appkwan.exertion.feature.newpost.NewPostActivity;
 import com.appkwan.exertion.feature.profile.ProfileActivity;
 import com.appkwan.exertion.feature.userinfo.UserInfoActivity;
+
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -41,6 +51,7 @@ public class MainActivity extends AppCompatActivity implements MainView {
     private MainPresenter mPresenter;
 
     private SectionsPagerAdapter mSectionsPagerAdapter;
+    private OnSearchTextListener onSearchTextListener;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,11 +60,21 @@ public class MainActivity extends AppCompatActivity implements MainView {
         ButterKnife.bind(this);
 
         mPresenter = new MainPresenter(this);
-
         initToolBar();
+
         mSectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager());
         viewpager.setAdapter(mSectionsPagerAdapter);
         tabLayout.setupWithViewPager(viewpager);
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
     }
 
     @Override
@@ -74,8 +95,45 @@ public class MainActivity extends AppCompatActivity implements MainView {
             case R.id.action_messages:
                 navigateToMessagesActivity();
                 break;
+            case R.id.action_search:
+                showSearchDialog();
+                break;
         }
         return true;
+    }
+
+    private void showSearchDialog() {
+
+        AlertDialog.Builder mBuilder = new AlertDialog.Builder(MainActivity.this);
+        View mView = getLayoutInflater().inflate(R.layout.item_search_layout, null);
+
+        final EditText mSearchArea = mView.findViewById(R.id.searchArea);
+        Button mSearchButton = mView.findViewById(R.id.searchButtonSearch);
+
+        mBuilder.setView(mView);
+        AlertDialog dialog = mBuilder.create();
+        dialog.show();
+
+        mSearchButton.setOnClickListener(view -> {
+           String queryLocation = mSearchArea.getText().toString().trim();
+           postSearchQueryEvent(queryLocation);
+           dialog.hide();
+        });
+
+    }
+
+    @SuppressLint("RestrictedApi")
+    private void postSearchQueryEvent(String queryLocation) {
+        SearchLocationEvent event = new SearchLocationEvent();
+        event.setSearchText(queryLocation);
+
+        if(getSupportFragmentManager().getFragments().get(0).isMenuVisible()){
+            event.setSearchTypeTuition(true);
+        }else{
+            event.setSearchTypeTuition(false);
+        }
+
+        EventBus.getDefault().post(event);
     }
 
     @Override
@@ -91,10 +149,15 @@ public class MainActivity extends AppCompatActivity implements MainView {
     }
 
     @OnClick(R.id.mNewPostFloatButton)
-    public void createNewPost(View view){
+    public void createNewPost(View view) {
         startActivity(new Intent(this, NewPostActivity.class
         ));
     }
+
+    public void setOnSearchTextListener(OnSearchTextListener listener) {
+        onSearchTextListener = listener;
+    }
+
     private void initToolBar() {
         setSupportActionBar(toolbar);
     }
@@ -103,7 +166,7 @@ public class MainActivity extends AppCompatActivity implements MainView {
         startActivity(new Intent(this, ProfileActivity.class));
     }
 
-    private void navigateToMessagesActivity(){
+    private void navigateToMessagesActivity() {
         startActivity(new Intent(this, AllMessageActivity.class));
     }
 
@@ -144,4 +207,17 @@ public class MainActivity extends AppCompatActivity implements MainView {
             return null;
         }
     }
+
+    public Fragment getVisibleFragment() {
+        FragmentManager fragmentManager = MainActivity.this.getSupportFragmentManager();
+        List<Fragment> fragments = fragmentManager.getFragments();
+        if (fragments != null) {
+            for (Fragment fragment : fragments) {
+                if (fragment != null && fragment.isVisible())
+                    return fragment;
+            }
+        }
+        return null;
+    }
+
 }

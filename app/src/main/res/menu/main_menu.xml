@@ -3,9 +3,9 @@
     xmlns:android="http://schemas.android.com/apk/res/android">
 
     <item
-        android:id="@+id/app_bar_search"
+        android:id="@+id/action_search"
         android:icon="@drawable/ic_search"
-        android:title="Search"
+        android:title="Enter Location"
         app:showAsAction="always" />
 
     <item
@@ -14,11 +14,13 @@
         android:title="Notification"
         app:showAsAction="always" />
 
+    <!--
     <item
         android:id="@+id/action_notification"
         android:icon="@drawable/ic_notification"
         android:title="Notification"
         app:showAsAction="never" />
+    -->
 
     <item
         android:id="@+id/action_profile"

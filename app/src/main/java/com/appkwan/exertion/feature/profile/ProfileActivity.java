@@ -1,10 +1,12 @@
 package com.appkwan.exertion.feature.profile;
 
+import android.app.AlertDialog;
 import android.app.ProgressDialog;
+import android.content.ActivityNotFoundException;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
-import android.support.constraint.Placeholder;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
@@ -16,9 +18,11 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.appkwan.exertion.R;
+import com.appkwan.exertion.feature.cvview.CvViewActivity;
 import com.appkwan.exertion.feature.dbhelper.imagehelper.ImageUploader;
 import com.appkwan.exertion.feature.dbhelper.imagehelper.OnImageUploaderListener;
 import com.appkwan.exertion.feature.home.User;
+import com.appkwan.exertion.feature.message.MessageActivity;
 import com.appkwan.exertion.feature.utitlity.Constant;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
@@ -29,13 +33,13 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 import de.hdodenhof.circleimageview.CircleImageView;
 
 public class ProfileActivity extends AppCompatActivity implements ProfileView, OnImageUploaderListener {
 
     private static final String TAG = "ProfileActivity";
 
-    private static final int PICK_IMAGE_CODE = 0001;
     @BindView(R.id.toolbar)
     Toolbar toolbar;
     @BindView(R.id.circleImageView)
@@ -68,6 +72,8 @@ public class ProfileActivity extends AppCompatActivity implements ProfileView, O
     TextView editPermanentAddress;
     @BindView(R.id.editPhoneButton)
     TextView editPhoneButton;
+    @BindView(R.id.mAddYourCvTextView)
+    TextView mAddYourCvTextView;
     @BindView(R.id.mEditImageView)
     ImageView mEditImageView;
 
@@ -80,6 +86,7 @@ public class ProfileActivity extends AppCompatActivity implements ProfileView, O
     private String mUserId, mOtherUserId;
 
     private ProgressDialog mProgressDialog;
+    private String mUserCvUrl = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -108,10 +115,26 @@ public class ProfileActivity extends AppCompatActivity implements ProfileView, O
             mPresenter.getUserDetails(mOtherUserId);
             mEditImageView.setVisibility(View.GONE);
             hideEditButtons();
+            hideAddYourCvButton();
         }
 
         setToolbar();
 
+    }
+
+
+    @OnClick(R.id.mAddYourCvTextView)
+    public void onAddYourCvClicked() {
+
+        if (mAddYourCvTextView.getText().equals("Show Your CV")) {
+            showUserCv();
+            return;
+        }
+
+        Intent intent = new Intent();
+        intent.setType("*/*");
+        intent.setAction(Intent.ACTION_GET_CONTENT);
+        startActivityForResult(Intent.createChooser(intent, "Select PDF"), Constant.PDF_RQ_KEY);
     }
 
     public void editButtonClicked(View view) {
@@ -150,19 +173,14 @@ public class ProfileActivity extends AppCompatActivity implements ProfileView, O
                 makeCall();
                 break;
             case R.id.action_message:
-                sendMessage();
+                navigateToMessageActivity();
+                break;
+
+            case R.id.action_cv:
+                showUserCv();
                 break;
         }
         return true;
-    }
-
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if (requestCode == PICK_IMAGE_CODE) {
-            //image is selected
-            mProgressDialog.show();
-            uploadImage(data);
-        }
     }
 
     @Override
@@ -176,6 +194,16 @@ public class ProfileActivity extends AppCompatActivity implements ProfileView, O
         mPresentAddress.setText(user.getPresentAddress());
         mPermanentAddress.setText(user.getPermanentAddress());
         mPhoneNumber.setText(user.getPhone());
+        mUserCvUrl = user.getCv();
+        setShowCvText(mUserCvUrl);
+    }
+
+    private void setShowCvText(String mUserCvUrl) {
+        if (mUserCvUrl != null) {
+            if (!mUserCvUrl.isEmpty()) {
+                mAddYourCvTextView.setText("Show Your CV");
+            }
+        }
     }
 
     @Override
@@ -190,6 +218,13 @@ public class ProfileActivity extends AppCompatActivity implements ProfileView, O
     }
 
     @Override
+    public void onCvUrlSavedSuccess() {
+        if (mProgressDialog.isShowing())
+            mProgressDialog.hide();
+        mAddYourCvTextView.setText("Your CV is uploaded successfully!");
+    }
+
+    @Override
     public void onImageUploadedSuccess(String imageUrl) {
         if (mProgressDialog.isShowing())
             mProgressDialog.hide();
@@ -199,7 +234,37 @@ public class ProfileActivity extends AppCompatActivity implements ProfileView, O
 
     @Override
     public void onImageUploadingError(String message) {
+        if (mProgressDialog.isShowing())
+            mProgressDialog.hide();
         Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void onCvUploadedSuccess(String cvUrl) {
+        if (mProgressDialog.isShowing())
+            mProgressDialog.hide();
+        mPresenter.saveUserCvDownloadUrl(cvUrl);
+    }
+
+    @Override
+    public void onCvUploadingError(String message) {
+        if (mProgressDialog.isShowing())
+            mProgressDialog.hide();
+        Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode == Constant.PICK_IMAGE_CODE) {
+            //image is selected
+            mProgressDialog.show();
+            uploadImage(data);
+        }
+
+        if (requestCode == Constant.PDF_RQ_KEY) {
+            mProgressDialog.show();
+            uploadCv(data);
+        }
     }
 
     private void setToolbar() {
@@ -253,19 +318,25 @@ public class ProfileActivity extends AppCompatActivity implements ProfileView, O
         startActivity(intent);
     }
 
-    private void sendMessage() {
-
+    private void navigateToMessageActivity() {
+        Intent intent = new Intent(this, MessageActivity.class);
+        intent.putExtra(Constant.USER_ID_KEY, mOtherUserId);
+        startActivity(intent);
     }
 
     private void requestImagePicker() {
         Intent intent = new Intent();
         intent.setType("image/*");
         intent.setAction(Intent.ACTION_GET_CONTENT);
-        startActivityForResult(Intent.createChooser(intent, "Select Picture"), PICK_IMAGE_CODE);
+        startActivityForResult(Intent.createChooser(intent, "Select Picture"), Constant.PICK_IMAGE_CODE);
     }
 
     private void uploadImage(Intent data) {
         mImageUploader.uploadUserProfileImage(data);
+    }
+
+    private void uploadCv(Intent data) {
+        mImageUploader.uploadUserCv(data);
     }
 
     private void loadProfileImage(String imageUrl) {
@@ -273,6 +344,48 @@ public class ProfileActivity extends AppCompatActivity implements ProfileView, O
                 .load(imageUrl)
                 .apply(RequestOptions.placeholderOf(getResources().getDrawable(R.drawable.ic_avatar_app)))
                 .into(circleImageView);
+    }
+
+    private void hideAddYourCvButton() {
+        mAddYourCvTextView.setVisibility(View.INVISIBLE);
+    }
+
+    private void showUserCv() {
+
+        if (mUserCvUrl != null) {
+            if (!mUserCvUrl.isEmpty()) {
+                showUserCvDownloadOrViewChoiceDialog();
+            }
+        } else {
+            Toast.makeText(this, "This user doesn't have CV uploaded!", Toast.LENGTH_SHORT).show();
+        }
+
+    }
+
+    private void showUserCvDownloadOrViewChoiceDialog() {
+        new AlertDialog.Builder(this)
+                .setMessage("Select what you want?")
+
+                .setPositiveButton("View", (dialog, which) -> {
+
+                    Intent target = new Intent(Intent.ACTION_VIEW);
+                    target.setDataAndType(Uri.parse(mUserCvUrl),"application/pdf");
+                    target.setFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
+
+                    Intent intent = Intent.createChooser(target, "Open File");
+                    try {
+                        startActivity(intent);
+                    } catch (ActivityNotFoundException e) {
+                        // Instruct the user to install a PDF reader here, or something
+                    }
+
+                })
+                .setNegativeButton("Download", (dialog, which) -> {
+                    Intent downloadIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(mUserCvUrl));
+                    startActivity(downloadIntent);
+                })
+                .setIcon(android.R.drawable.ic_dialog_alert)
+                .show();
     }
 
 }

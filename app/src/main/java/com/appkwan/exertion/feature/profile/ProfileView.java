@@ -8,4 +8,6 @@ public interface ProfileView {
     void onError(String message);
 
     void onImageUrlSavedSuccess();
+
+    void onCvUrlSavedSuccess();
 }

@@ -12,4 +12,10 @@
         android:icon="@drawable/ic_message"
         android:title="Item"
         app:showAsAction="always" />
+
+    <item
+        android:id="@+id/action_cv"
+        android:icon="@drawable/ic_cv"
+        android:title="Item"
+        app:showAsAction="always" />
 </menu>

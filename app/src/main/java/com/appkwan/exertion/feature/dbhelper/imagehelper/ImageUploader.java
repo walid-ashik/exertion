@@ -19,25 +19,27 @@ public class ImageUploader {
     private String mUserId;
     OnImageUploaderListener listener;
     private StorageReference mStorageRef;
+    private StorageReference mStorageCvRef;
     private UploadTask uploadTask;
 
     public ImageUploader(OnImageUploaderListener listener) {
         this.listener = listener;
         mStorageRef = FirebaseStorage.getInstance().getReference().child("profile_images");
+        mStorageCvRef = FirebaseStorage.getInstance().getReference().child("cv");
         mUserId = FirebaseAuth.getInstance().getCurrentUser().getUid();
     }
 
     public void uploadUserProfileImage(Intent data) {
         Uri uri = data.getData();
-        StorageReference riversRef = mStorageRef.child(mUserId + uri.getLastPathSegment());
+        StorageReference imageRef = mStorageRef.child(mUserId + uri.getLastPathSegment());
 
-        uploadTask = riversRef.putFile(uri);
+        uploadTask = imageRef.putFile(uri);
 
          uploadTask.continueWithTask(task -> {
              if (!task.isSuccessful()) {
                  throw task.getException();
              }
-             return riversRef.getDownloadUrl();
+             return imageRef.getDownloadUrl();
          }).addOnCompleteListener(task -> {
              if (task.isSuccessful()) {
                  Uri downloadUri = task.getResult();
@@ -46,5 +48,26 @@ public class ImageUploader {
                 listener.onImageUploadingError(task.getException().getMessage());
              }
          });
+    }
+
+    public void uploadUserCv(Intent data) {
+        Uri uri = data.getData();
+        StorageReference cvRef = mStorageCvRef.child(mUserId + uri.getLastPathSegment());
+
+        uploadTask = cvRef.putFile(uri);
+
+        uploadTask.continueWithTask(task -> {
+            if (!task.isSuccessful()) {
+                throw task.getException();
+            }
+            return cvRef.getDownloadUrl();
+        }).addOnCompleteListener(task -> {
+            if (task.isSuccessful()) {
+                Uri downloadUri = task.getResult();
+                listener.onCvUploadedSuccess(downloadUri.toString());
+            } else {
+                listener.onCvUploadingError(task.getException().getMessage());
+            }
+        });
     }
 }

@@ -50,4 +50,16 @@ public class ProfilePresenter {
                     }
                 });
     }
+
+    public void saveUserCvDownloadUrl(String cvUrl) {
+        String userId = FirebaseAuth.getInstance().getCurrentUser().getUid();
+        mRootRef.child(userId)
+                .child("cv")
+                .setValue(cvUrl)
+                .addOnCompleteListener(task -> {
+                    if(task.isSuccessful()){
+                        mView.onCvUrlSavedSuccess();
+                    }
+                });
+    }
 }

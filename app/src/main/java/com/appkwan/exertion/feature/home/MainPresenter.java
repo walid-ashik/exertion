@@ -1,15 +1,19 @@
 package com.appkwan.exertion.feature.home;
 
 import android.support.annotation.NonNull;
+import android.util.Log;
 
+import com.appkwan.exertion.feature.home.fragments.Post;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
-public class MainPresenter  {
+public class MainPresenter {
+    private static final String TAG = "MainPresenter";
     private MainView view;
     private UserInfo userInfoView;
 
@@ -19,7 +23,7 @@ public class MainPresenter  {
     public MainPresenter(MainView view) {
         this.view = view;
         mRootDataRef = FirebaseDatabase.getInstance().getReference().child("Users");
-        if(FirebaseAuth.getInstance().getCurrentUser() != null){
+        if (FirebaseAuth.getInstance().getCurrentUser() != null) {
             userId = FirebaseAuth.getInstance().getCurrentUser().getUid();
         }
         checkIfUserInfoSavedInDatabase();
@@ -30,10 +34,10 @@ public class MainPresenter  {
         mRootDataRef.child(userId).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                if( ! dataSnapshot.hasChild("name")){
+                if (!dataSnapshot.hasChild("name")) {
                     view.navigateToUserInfoActivity();
                 }
-                if(! dataSnapshot.hasChild("gender")){
+                if (!dataSnapshot.hasChild("gender")) {
                     view.navigateToUserInfoActivity();
                 }
             }
@@ -46,11 +50,11 @@ public class MainPresenter  {
     }
 
 
-
-    void logoutUser(){
-        if(FirebaseAuth.getInstance().getCurrentUser() != null){
+    void logoutUser() {
+        if (FirebaseAuth.getInstance().getCurrentUser() != null) {
             FirebaseAuth.getInstance().signOut();
             view.navigateToLoginActivity();
         }
     }
+
 }
