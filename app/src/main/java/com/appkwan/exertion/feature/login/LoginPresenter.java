@@ -6,6 +6,7 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 
 public class LoginPresenter implements LoginContract.Presenter {
 
@@ -26,8 +27,17 @@ public class LoginPresenter implements LoginContract.Presenter {
             @Override
             public void onComplete(@NonNull Task<AuthResult> task) {
                 if(task.isSuccessful()){
-                    view.hideLoader();
-                    view.navigateToHome();
+
+                    FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+
+                    if(user.isEmailVerified()){
+                        view.hideLoader();
+                        view.navigateToHome();
+                    }else{
+                        view.hideLoader();
+                        view.onLoginError("Please verify your email first!");
+                    }
+
                 }else{
                     view.hideLoader();
                     view.onLoginError(task.getException().getMessage());

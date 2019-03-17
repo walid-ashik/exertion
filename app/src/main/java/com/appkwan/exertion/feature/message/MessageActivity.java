@@ -20,6 +20,7 @@ import com.appkwan.exertion.feature.utitlity.Constant;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
@@ -62,6 +63,7 @@ public class MessageActivity extends AppCompatActivity implements MessageView{
         ButterKnife.bind(this);
 
         mPresenter = new MessagePresenter(this);
+        mMessageAdapter = new MessageAdapter(this, new ArrayList<>(), mPresenter);
         initRecyclerView();
 
         if(getIntent().getExtras() != null){
@@ -91,7 +93,7 @@ public class MessageActivity extends AppCompatActivity implements MessageView{
     public void onMessageUserDetailsLoaded(User messagingUser) {
         mUserNameTv.setText(messagingUser.getName());
 
-        Glide.with(this)
+        Glide.with(getApplicationContext())
                 .load(messagingUser.getProfile_image())
                 .apply(RequestOptions.placeholderOf(this.getResources().getDrawable(R.drawable.ic_avatar_app)))
                 .into(mUserImage);
@@ -126,6 +128,7 @@ public class MessageActivity extends AppCompatActivity implements MessageView{
     public void onMessageSavedSuccess() {
         mMessageAdapter.notifyDataSetChanged();
         mMessageEditText.setText("");
+        if(mMessageRecyclerView.getAdapter() != null)
         mMessageRecyclerView.scrollToPosition(mMessageRecyclerView.getAdapter().getItemCount() - 1);
     }
 

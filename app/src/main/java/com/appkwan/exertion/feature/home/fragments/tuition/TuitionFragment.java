@@ -92,7 +92,9 @@ public class TuitionFragment extends Fragment implements TuitionView, OnSearchTe
 
     @Override
     public void onPostLoaded(List<Post> postList) {
+        if(layoutEmpty != null)
         layoutEmpty.setVisibility(View.GONE);
+        if(mTuitionRecyclerView != null)
         mTuitionRecyclerView.setVisibility(View.VISIBLE);
 
         mAdapter = new TuitionAdapter(postList, getContext());

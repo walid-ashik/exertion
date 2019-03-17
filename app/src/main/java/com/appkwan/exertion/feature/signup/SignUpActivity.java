@@ -16,9 +16,11 @@ import android.widget.Toast;
 
 import com.appkwan.exertion.R;
 import com.appkwan.exertion.feature.home.MainActivity;
+import com.appkwan.exertion.feature.login.LoginActivity;
 import com.appkwan.exertion.feature.signup.otpsignup.MobileSignUpActivity;
 import com.appkwan.exertion.feature.utitlity.Constant;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -98,6 +100,26 @@ public class SignUpActivity extends AppCompatActivity implements SignUpView{
     public void hideLoader() {
         mProgressDialog.hide();
     }
+
+    @Override
+    public void onSignUpSuccess() {
+        if(FirebaseAuth.getInstance().getCurrentUser() != null){
+            mPresenter.sendVerificationLink(FirebaseAuth.getInstance().getCurrentUser());
+        }
+    }
+
+    @Override
+    public void navigateToLogin() {
+        Toast.makeText(this, "Please verify your email, we've sent a link!", Toast.LENGTH_LONG).show();
+        Intent intent = new Intent(this, LoginActivity.class);
+        startActivity(intent);
+    }
+
+    @Override
+    public void onVerificationCodeSendingError(String message) {
+        Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
+    }
+
 
     @OnClick(R.id.mSignUpButton)
     public void signUpButtonClicked(View view){

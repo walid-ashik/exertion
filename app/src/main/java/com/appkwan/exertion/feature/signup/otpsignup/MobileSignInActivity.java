@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.AppCompatEditText;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
@@ -26,6 +27,8 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 public class MobileSignInActivity extends AppCompatActivity {
+
+    private static final String TAG = "MobileSignInActivity";
 
     @BindView(R.id.textView3)
     TextView textView3;
@@ -108,8 +111,8 @@ public class MobileSignInActivity extends AppCompatActivity {
         @Override
         public void onCodeSent(String s, PhoneAuthProvider.ForceResendingToken forceResendingToken) {
             super.onCodeSent(s, forceResendingToken);
+            Log.e(TAG, "onCodeSent: " + s  );
             verificationId = s;
-            mProgressDialog.hide();
         }
 
         @Override
@@ -118,10 +121,13 @@ public class MobileSignInActivity extends AppCompatActivity {
             mProgressDialog.hide();
 
             String code = phoneAuthCredential.getSmsCode();
+            Log.e(TAG, "onVerificationCompleted: " + code  );
             if (code != null) {
-               // mProgressDialog.show();
+                mProgressDialog.show();
                 verifyCode(code);
             }
+
+            signInWithCredential(phoneAuthCredential);
         }
 
         @Override
@@ -132,7 +138,6 @@ public class MobileSignInActivity extends AppCompatActivity {
     };
 
     private void verifyCode(String code) {
-        mProgressDialog.show();
         PhoneAuthCredential credential = PhoneAuthProvider.getCredential(verificationId, code);
         signInWithCredential(credential);
     }
@@ -141,6 +146,8 @@ public class MobileSignInActivity extends AppCompatActivity {
 
         mAuth.signInWithCredential(credential)
                 .addOnCompleteListener(task -> {
+
+                    Log.e(TAG, "signInWithCredential: " + task.isSuccessful() );
 
                     if (task.isSuccessful()) {
                         mProgressDialog.hide();
