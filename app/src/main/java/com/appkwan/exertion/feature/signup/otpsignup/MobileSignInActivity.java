@@ -109,6 +109,7 @@ public class MobileSignInActivity extends AppCompatActivity {
         public void onCodeSent(String s, PhoneAuthProvider.ForceResendingToken forceResendingToken) {
             super.onCodeSent(s, forceResendingToken);
             verificationId = s;
+            mProgressDialog.hide();
         }
 
         @Override
@@ -118,7 +119,7 @@ public class MobileSignInActivity extends AppCompatActivity {
 
             String code = phoneAuthCredential.getSmsCode();
             if (code != null) {
-                mProgressDialog.show();
+               // mProgressDialog.show();
                 verifyCode(code);
             }
         }
@@ -131,6 +132,7 @@ public class MobileSignInActivity extends AppCompatActivity {
     };
 
     private void verifyCode(String code) {
+        mProgressDialog.show();
         PhoneAuthCredential credential = PhoneAuthProvider.getCredential(verificationId, code);
         signInWithCredential(credential);
     }
