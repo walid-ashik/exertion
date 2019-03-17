@@ -60,7 +60,9 @@ public class NewPostPresenter implements UserInfo {
         Map map = new HashMap();
         map.put("post", post);
         map.put("location", location);
+        map.put("query_location", location.toLowerCase());
         map.put("group", mBloodGroup);
+        map.put("query_group", mBloodGroup.toLowerCase());
         map.put("user_id", userId);
 
         String pushKey = mRootDataRef.push().getKey();

@@ -125,7 +125,7 @@ public class MainActivity extends AppCompatActivity implements MainView {
     @SuppressLint("RestrictedApi")
     private void postSearchQueryEvent(String queryLocation) {
         SearchLocationEvent event = new SearchLocationEvent();
-        event.setSearchText(queryLocation);
+        event.setSearchText(queryLocation.toLowerCase());
 
         if(getSupportFragmentManager().getFragments().get(0).isMenuVisible()){
             event.setSearchTypeTuition(true);

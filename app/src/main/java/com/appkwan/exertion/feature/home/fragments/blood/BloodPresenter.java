@@ -51,7 +51,7 @@ public class BloodPresenter {
     }
 
     public void queryLocation(String queryLocation) {
-        Query query = mRootDataRef.orderByChild("location")
+        Query query = mRootDataRef.orderByChild("query_location")
                 .startAt(queryLocation)
                 .endAt(queryLocation + "\uf8ff");
 

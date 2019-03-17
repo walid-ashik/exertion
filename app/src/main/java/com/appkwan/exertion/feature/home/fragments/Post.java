@@ -3,13 +3,31 @@ package com.appkwan.exertion.feature.home.fragments;
 public class Post {
 
     public String group;
+    public String query_group;
     public String location;
+    public String query_location;
     public String post;
     public String user_id;
 
     public String postId;
 
     public Post() {
+    }
+
+    public String getQuery_group() {
+        return query_group;
+    }
+
+    public void setQuery_group(String query_group) {
+        this.query_group = query_group;
+    }
+
+    public String getQuery_location() {
+        return query_location;
+    }
+
+    public void setQuery_location(String query_location) {
+        this.query_location = query_location;
     }
 
     public String getGroup() {
