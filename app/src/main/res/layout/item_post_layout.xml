@@ -60,7 +60,7 @@
             android:textSize="12sp"
             app:layout_constraintStart_toEndOf="@+id/imageView4"
             app:layout_constraintTop_toBottomOf="@+id/mUserNameTextView"
-            tools:text="User Location, Anywhere" />
+            tools:text="user Location, Anywhere" />
 
         <ImageView
             android:id="@+id/mBloodIconImageView"

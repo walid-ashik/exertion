@@ -18,6 +18,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.appkwan.exertion.R;
+import com.appkwan.exertion.feature.home.MainActivity;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 
@@ -131,8 +132,36 @@ public class NewPostActivity extends AppCompatActivity implements NewPostView {
         String location = mLocationEditText.getText().toString().trim();
 
         if(isAllInputted(post, location)){
-            mPresenter.saveThePostToDataBase(mPostType, post, location, mBloodGroup);
+            if(mPostType.equals("Tuition")){
+               requestUserInputSubjectName(post, location);
+            }else{
+                mPresenter.saveThePostToDataBase(mPostType, post, location, mBloodGroup, "");
+            }
         }
+    }
+
+    private void requestUserInputSubjectName(String post, String location) {
+
+        android.app.AlertDialog.Builder mBuilder = new android.app.AlertDialog.Builder(this);
+        View mView = getLayoutInflater().inflate(R.layout.item_search_layout, null);
+
+        final EditText mSearchArea = mView.findViewById(R.id.searchArea);
+        ImageView searchImageView = mView.findViewById(R.id.search_image_view);
+        searchImageView.setVisibility(View.GONE);
+
+        mSearchArea.setHint("Enter which subject");
+        Button mSearchButton = mView.findViewById(R.id.searchButtonSearch);
+        mSearchButton.setText("Add Subject");
+        mBuilder.setView(mView);
+
+        android.app.AlertDialog dialog = mBuilder.create();
+        dialog.show();
+
+        mSearchButton.setOnClickListener(view -> {
+            String subjectName = mSearchArea.getText().toString().trim();
+            dialog.hide();
+            mPresenter.saveThePostToDataBase(mPostType, post, location, mBloodGroup, subjectName.toLowerCase());
+        });
     }
 
     private boolean isAllInputted(String post, String location) {
@@ -179,7 +208,7 @@ public class NewPostActivity extends AppCompatActivity implements NewPostView {
             RadioButton rb = radioGroup.findViewById(checkedId);
 
             if (null != rb && checkedId > -1) {
-                mBloodGroup = rb.getText().toString();
+                mBloodGroup = rb.getText().toString().toLowerCase();
                 mPostType = "Blood";
             }
         });

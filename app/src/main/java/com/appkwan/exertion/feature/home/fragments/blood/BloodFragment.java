@@ -76,7 +76,7 @@ public class BloodFragment extends Fragment implements BloodView, OnSearchTextLi
         if(searchEvent.getSearchType().equals("Area")){
             mPresenter.querySearch("query_location", searchEvent.getSearchText());
         }else if(searchEvent.getSearchType().equals("Blood Group")){
-            mPresenter.querySearch("query_group", searchEvent.getSearchText());
+            mPresenter.querySearch("group", searchEvent.getSearchText().toLowerCase());
         }
     }
 

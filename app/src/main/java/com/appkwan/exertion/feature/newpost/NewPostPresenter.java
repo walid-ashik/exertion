@@ -53,7 +53,7 @@ public class NewPostPresenter implements UserInfo {
         });
     }
 
-    public void saveThePostToDataBase(String mPostType, String post, String location, String mBloodGroup) {
+    public void saveThePostToDataBase(String mPostType, String post, String location, String mBloodGroup, String subjectName) {
 
         view.showLoader();
 
@@ -61,8 +61,9 @@ public class NewPostPresenter implements UserInfo {
         map.put("post", post);
         map.put("location", location);
         map.put("query_location", location.toLowerCase());
-        map.put("group", mBloodGroup);
+        map.put("group", mBloodGroup.toLowerCase());
         map.put("query_group", mBloodGroup.toLowerCase());
+        map.put("query_subject", subjectName.toLowerCase());
         map.put("user_id", userId);
 
         String pushKey = mRootDataRef.push().getKey();

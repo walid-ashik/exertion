@@ -12,6 +12,7 @@
         android:layout_height="100dp">
 
         <ImageView
+            android:id="@+id/search_image_view"
             android:src="@drawable/ic_search_black_24dp"
             android:tint="@color/colorWhite"
             android:layout_width="50dp"
@@ -24,16 +25,16 @@
         android:id="@+id/searchArea"
         android:layout_width="match_parent"
         android:layout_height="45dp"
-        android:gravity="center"
-        android:layout_marginTop="20dp"
-        android:layout_marginBottom="20dp"
-        android:hint="Enter Your Location"
-        android:paddingLeft="10dp"
-        android:textSize="14sp"
-        android:background="@android:color/transparent"
         android:layout_marginLeft="10dp"
+        android:layout_marginTop="20dp"
         android:layout_marginRight="10dp"
-        />
+        android:layout_marginBottom="20dp"
+        android:background="@android:color/transparent"
+        android:gravity="center"
+        android:hint="Enter Your Location"
+        android:inputType="textPersonName"
+        android:paddingLeft="10dp"
+        android:textSize="14sp" />
 
     <Button
         android:id="@+id/searchButtonSearch"
