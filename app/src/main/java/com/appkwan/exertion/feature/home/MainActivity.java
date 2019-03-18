@@ -20,6 +20,7 @@ import android.widget.EditText;
 
 import com.appkwan.exertion.R;
 import com.appkwan.exertion.feature.AboutActivity;
+import com.appkwan.exertion.feature.ThanksAndCreditActivity;
 import com.appkwan.exertion.feature.accountchoice.AccountChoiceActivity;
 import com.appkwan.exertion.feature.home.fragments.blood.BloodFragment;
 import com.appkwan.exertion.feature.home.fragments.tuition.TuitionFragment;
@@ -101,6 +102,7 @@ public class MainActivity extends AppCompatActivity implements MainView {
                 startActivity(new Intent(this, AboutActivity.class));
                 break;
             case R.id.action_credit:
+                startActivity(new Intent(this, ThanksAndCreditActivity.class));
                 break;
         }
         return true;

@@ -14,7 +14,8 @@
         android:supportsRtl="true"
         android:theme="@style/MyMaterialTheme"
         tools:ignore="GoogleAppIndexingWarning">
-        <activity android:name=".feature.AboutActivity"></activity>
+        <activity android:name=".feature.ThanksAndCreditActivity"></activity>
+        <activity android:name=".feature.AboutActivity" />
         <activity android:name=".feature.cvview.CvViewActivity" />
         <activity android:name=".feature.splash.SplashActivity">
             <intent-filter>
