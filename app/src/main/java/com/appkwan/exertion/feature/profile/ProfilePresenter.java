@@ -5,11 +5,14 @@ import android.support.annotation.NonNull;
 import android.util.Log;
 
 import com.appkwan.exertion.feature.home.User;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
 
@@ -93,5 +96,45 @@ public class ProfilePresenter {
 
     private void calculateRating(int rating, int ratingCount) {
         mView.onRatingLoaded((double) rating / ratingCount, ratingCount);
+    }
+
+    public void checkIfOtherUserRatedThisPerson(String mOtherUserId) {
+        String userId = FirebaseAuth.getInstance().getCurrentUser().getUid();
+
+        Query query = mUserRef.child(userId)
+                .child("Rating")
+                .child(mOtherUserId);
+
+        query.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                if(dataSnapshot.exists()){
+                    mView.otherUserRatedThisUser(true);
+                }else{
+                    mView.otherUserRatedThisUser(false);
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+    }
+
+    public void setRating(String mOtherUserId, int rating) {
+        String userId = FirebaseAuth.getInstance().getCurrentUser().getUid();
+        mUserRef.child(userId)
+                .child("Rating")
+                .child(mOtherUserId)
+                .child("rate")
+                .setValue(rating)
+                .addOnCompleteListener(task -> {
+                   if(task.isSuccessful()){
+                       mView.onRatingSuccess();
+                   }else{
+                       mView.onRatingError(task.getException().getMessage());
+                   }
+                });
     }
 }

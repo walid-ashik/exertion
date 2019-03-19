@@ -4,6 +4,7 @@ import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.ActivityNotFoundException;
 import android.content.Intent;
+import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.constraint.ConstraintLayout;
@@ -13,6 +14,7 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.RatingBar;
@@ -22,6 +24,7 @@ import android.widget.Toast;
 import com.appkwan.exertion.R;
 import com.appkwan.exertion.feature.dbhelper.imagehelper.ImageUploader;
 import com.appkwan.exertion.feature.dbhelper.imagehelper.OnImageUploaderListener;
+import com.appkwan.exertion.feature.home.MainActivity;
 import com.appkwan.exertion.feature.home.User;
 import com.appkwan.exertion.feature.message.MessageActivity;
 import com.appkwan.exertion.feature.utitlity.Constant;
@@ -120,6 +123,7 @@ public class ProfileActivity extends AppCompatActivity implements ProfileView, O
             mOtherUserId = getIntent().getStringExtra(Constant.USER_ID_KEY);
             mPresenter.getUserDetails(mOtherUserId);
             mEditImageView.setVisibility(View.GONE);
+            mPresenter.checkIfOtherUserRatedThisPerson(mOtherUserId);
             hideEditButtons();
             hideAddYourCvButton();
         }
@@ -168,6 +172,40 @@ public class ProfileActivity extends AppCompatActivity implements ProfileView, O
             getMenuInflater().inflate(R.menu.profile_menu, menu);
         }
         return true;
+    }
+
+
+    @OnClick(R.id.mRatingTextView)
+    public void onAddRatingTextViewClicked(){
+
+        if(mOtherUserId == null){
+            return;
+        }else if(mRatingTextView.getText().toString().equals(getString(R.string.you_ve_rated))){
+            return;
+        }
+
+        AlertDialog.Builder mBuilder = new AlertDialog.Builder(this);
+        View mView = getLayoutInflater().inflate(R.layout.item_rating_dialog, null);
+
+        SmileRating smileRating = mView.findViewById(R.id.ratingView);
+        Button rateButton = mView.findViewById(R.id.rateButton);
+
+        mBuilder.setView(mView);
+        AlertDialog dialog = mBuilder.create();
+        dialog.show();
+
+        rateButton.setOnClickListener(view -> {
+
+            if(smileRating.getRating() != 0){
+
+                int rating = smileRating.getRating();
+                mPresenter.setRating(mOtherUserId, rating);
+
+                dialog.hide();
+            }else{
+                Toast.makeText(this, "Please add rating", Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 
     @Override
@@ -256,6 +294,27 @@ public class ProfileActivity extends AppCompatActivity implements ProfileView, O
     public void onRatingLoaded(double rating, int ratingCount) {
         Log.e(TAG, "onRatingLoaded: " + rating );
         mRatingBar.setRating((float) rating);
+    }
+
+    @Override
+    public void otherUserRatedThisUser(boolean isOtherUserRated) {
+        if(isOtherUserRated){
+            mRatingTextView.setText(getString(R.string.you_ve_rated));
+        }else{
+            Drawable img = getResources().getDrawable( R.drawable.ic_add_black_24dp );
+            mRatingTextView.setCompoundDrawablesWithIntrinsicBounds( img, null, null, null);
+            mRatingTextView.setText("Add Rating");
+        }
+    }
+
+    @Override
+    public void onRatingSuccess() {
+        Toast.makeText(this, "Rating successfully saved!", Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void onRatingError(String message) {
+        Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
     }
 
     @Override

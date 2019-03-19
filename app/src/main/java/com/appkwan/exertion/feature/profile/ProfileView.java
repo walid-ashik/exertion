@@ -12,4 +12,10 @@ public interface ProfileView {
     void onCvUrlSavedSuccess();
 
     void onRatingLoaded(double rating, int ratingCount);
+
+    void otherUserRatedThisUser(boolean isOtherUserRated);
+
+    void onRatingSuccess();
+
+    void onRatingError(String message);
 }

@@ -5,6 +5,7 @@
     <!-- TODO: Remove or change this placeholder text -->
     <!-- TODO: Remove or change this placeholder text -->
     <string name="email_allowance"><html> only <font color='red'>@diu.edu.bd</font> mail is allowed for student registration </html></string>
+    <string name="you_ve_rated">User Rating: </string>
 
     <string-array name="gender">
         <item>Your Gender</item>
