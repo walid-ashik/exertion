@@ -10,4 +10,6 @@ public interface ProfileView {
     void onImageUrlSavedSuccess();
 
     void onCvUrlSavedSuccess();
+
+    void onRatingLoaded(double rating, int ratingCount);
 }

@@ -49,4 +49,7 @@ dependencies {
     //...butterKnife
     implementation 'com.jakewharton:butterknife:8.5.1'
     annotationProcessor 'com.jakewharton:butterknife-compiler:8.5.1'
+
+    //..smiley rating
+    implementation 'com.github.sujithkanna:smileyrating:1.6.8'
 }

@@ -3,22 +3,23 @@ package com.appkwan.exertion.feature.profile;
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.ActivityNotFoundException;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.constraint.ConstraintLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.RatingBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.appkwan.exertion.R;
-import com.appkwan.exertion.feature.cvview.CvViewActivity;
 import com.appkwan.exertion.feature.dbhelper.imagehelper.ImageUploader;
 import com.appkwan.exertion.feature.dbhelper.imagehelper.OnImageUploaderListener;
 import com.appkwan.exertion.feature.home.User;
@@ -27,6 +28,8 @@ import com.appkwan.exertion.feature.utitlity.Constant;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 import com.google.firebase.auth.FirebaseAuth;
+import com.hsalf.smilerating.BaseRating;
+import com.hsalf.smilerating.SmileRating;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -36,7 +39,7 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import de.hdodenhof.circleimageview.CircleImageView;
 
-public class ProfileActivity extends AppCompatActivity implements ProfileView, OnImageUploaderListener {
+public class ProfileActivity extends AppCompatActivity implements ProfileView, OnImageUploaderListener, SmileRating.OnSmileySelectionListener {
 
     private static final String TAG = "ProfileActivity";
 
@@ -76,6 +79,10 @@ public class ProfileActivity extends AppCompatActivity implements ProfileView, O
     TextView mAddYourCvTextView;
     @BindView(R.id.mEditImageView)
     ImageView mEditImageView;
+    @BindView(R.id.mRatingTextView)
+    TextView mRatingTextView;
+    @BindView(R.id.ratingBar)
+    RatingBar mRatingBar;
 
     private List<EditText> mAllEditTexts = new ArrayList<>();
     private List<TextView> mEditButtons = new ArrayList<>();
@@ -103,7 +110,6 @@ public class ProfileActivity extends AppCompatActivity implements ProfileView, O
 
         mProgressDialog = new ProgressDialog(this);
         mProgressDialog.setMessage("Please wait...");
-
         if (getIntent().getStringExtra(Constant.USER_ID_KEY) == null) {
             //user itself visits this activity, hence show all edit buttons
             mUserId = FirebaseAuth.getInstance().getCurrentUser().getUid();
@@ -119,7 +125,8 @@ public class ProfileActivity extends AppCompatActivity implements ProfileView, O
         }
 
         setToolbar();
-
+        removeRatingSmileName();
+        mPresenter.getRating();
     }
 
 
@@ -161,6 +168,27 @@ public class ProfileActivity extends AppCompatActivity implements ProfileView, O
             getMenuInflater().inflate(R.menu.profile_menu, menu);
         }
         return true;
+    }
+
+    @Override
+    public void onSmileySelected(int smiley, boolean reselected) {
+        switch (smiley) {
+            case SmileRating.BAD:
+                Log.i(TAG, "Bad");
+                break;
+            case SmileRating.GOOD:
+                Log.i(TAG, "Good");
+                break;
+            case SmileRating.GREAT:
+                Log.i(TAG, "Great");
+                break;
+            case SmileRating.OKAY:
+                Log.i(TAG, "Okay");
+                break;
+            case SmileRating.TERRIBLE:
+                Log.i(TAG, "Terrible");
+                break;
+        }
     }
 
     @Override
@@ -222,6 +250,12 @@ public class ProfileActivity extends AppCompatActivity implements ProfileView, O
         if (mProgressDialog.isShowing())
             mProgressDialog.hide();
         mAddYourCvTextView.setText("Your CV is uploaded successfully!");
+    }
+
+    @Override
+    public void onRatingLoaded(double rating, int ratingCount) {
+        Log.e(TAG, "onRatingLoaded: " + rating );
+        mRatingBar.setRating((float) rating);
     }
 
     @Override
@@ -369,7 +403,7 @@ public class ProfileActivity extends AppCompatActivity implements ProfileView, O
                 .setPositiveButton("View", (dialog, which) -> {
 
                     Intent target = new Intent(Intent.ACTION_VIEW);
-                    target.setDataAndType(Uri.parse(mUserCvUrl),"application/pdf");
+                    target.setDataAndType(Uri.parse(mUserCvUrl), "application/pdf");
                     target.setFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
 
                     Intent intent = Intent.createChooser(target, "Open File");
@@ -388,4 +422,11 @@ public class ProfileActivity extends AppCompatActivity implements ProfileView, O
                 .show();
     }
 
+    private void removeRatingSmileName() {
+//        mRatingView.setNameForSmile(BaseRating.TERRIBLE, "");
+//        mRatingView.setNameForSmile(BaseRating.BAD, "");
+//        mRatingView.setNameForSmile(BaseRating.OKAY, "");
+//        mRatingView.setNameForSmile(BaseRating.GOOD, "");
+//        mRatingView.setNameForSmile(BaseRating.GREAT, "");
+    }
 }

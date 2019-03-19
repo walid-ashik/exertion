@@ -1,11 +1,10 @@
 package com.appkwan.exertion.feature.profile;
 
 import android.content.Intent;
-import android.net.Uri;
 import android.support.annotation.NonNull;
+import android.util.Log;
+
 import com.appkwan.exertion.feature.home.User;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -15,15 +14,18 @@ import com.google.firebase.database.ValueEventListener;
 
 
 public class ProfilePresenter {
+
+    private static final String TAG = "ProfilePresenter";
+
     ProfileView mView;
-    private DatabaseReference mRootRef;
+    private DatabaseReference mUserRef;
     public ProfilePresenter(ProfileView mView) {
         this.mView = mView;
-        mRootRef = FirebaseDatabase.getInstance().getReference().child("Users");
+        mUserRef = FirebaseDatabase.getInstance().getReference().child("Users");
     }
 
     public void getUserDetails(String userId) {
-        mRootRef.child(userId).addValueEventListener(new ValueEventListener() {
+        mUserRef.child(userId).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 if(dataSnapshot.exists()){
@@ -41,7 +43,7 @@ public class ProfilePresenter {
 
     public void saveUserUploadedImageDownloadUrl(String imageUrl) {
         String userId = FirebaseAuth.getInstance().getCurrentUser().getUid();
-        mRootRef.child(userId)
+        mUserRef.child(userId)
                 .child("profile_image")
                 .setValue(imageUrl)
                 .addOnCompleteListener(task -> {
@@ -53,7 +55,7 @@ public class ProfilePresenter {
 
     public void saveUserCvDownloadUrl(String cvUrl) {
         String userId = FirebaseAuth.getInstance().getCurrentUser().getUid();
-        mRootRef.child(userId)
+        mUserRef.child(userId)
                 .child("cv")
                 .setValue(cvUrl)
                 .addOnCompleteListener(task -> {
@@ -61,5 +63,35 @@ public class ProfilePresenter {
                         mView.onCvUrlSavedSuccess();
                     }
                 });
+    }
+
+    public void getRating() {
+        String userId = FirebaseAuth.getInstance().getCurrentUser().getUid();
+        mUserRef.child(userId)
+                .child("Rating")
+                .addValueEventListener(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                        if(dataSnapshot.exists()){
+                            int ratingCount = 0;
+                            int rating = 0;
+                            for (DataSnapshot snapshot : dataSnapshot.getChildren()){
+                                String rate = snapshot.child("rate").getValue().toString();
+                                rating += Integer.valueOf(rate);
+                                ratingCount++;
+                            }
+                            calculateRating(rating, ratingCount);
+                        }
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                    }
+                });
+    }
+
+    private void calculateRating(int rating, int ratingCount) {
+        mView.onRatingLoaded((double) rating / ratingCount, ratingCount);
     }
 }
