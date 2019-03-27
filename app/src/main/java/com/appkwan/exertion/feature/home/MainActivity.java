@@ -2,6 +2,7 @@ package com.appkwan.exertion.feature.home;
 
 import android.annotation.SuppressLint;
 import android.app.AlertDialog;
+import android.app.FragmentTransaction;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
@@ -17,6 +18,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 
 import com.appkwan.exertion.R;
 import com.appkwan.exertion.feature.AboutActivity;
@@ -110,15 +112,38 @@ public class MainActivity extends AppCompatActivity implements MainView {
 
     @SuppressLint("RestrictedApi")
     private void decideWhicheSearchUserWants() {
-        //TUITION Fragment
-        if (getSupportFragmentManager().getFragments().get(0).isMenuVisible()) {
-            showUserCustomerSearchDialog("Subject", "Location");
-        }
 
-        //BLOOD Fragment
-        if (getSupportFragmentManager().getFragments().get(1).isMenuVisible()) {
+        AlertDialog.Builder mBuilder = new AlertDialog.Builder(MainActivity.this);
+        View mView = getLayoutInflater().inflate(R.layout.dialog_decide_what_you_want_to_search, null);
+
+        TextView tuitionTextView = mView.findViewById(R.id.tuitonTextView);
+        TextView bloodTextView = mView.findViewById(R.id.bloodTextView);
+
+        mBuilder.setView(mView);
+        AlertDialog dialog = mBuilder.create();
+        dialog.show();
+
+        tuitionTextView.setOnClickListener(v -> {
+            dialog.hide();
+            showUserCustomerSearchDialog("Subject", "Location");
+            viewpager.setCurrentItem(0);
+        });
+
+        bloodTextView.setOnClickListener(v -> {
+            dialog.hide();
             showUserCustomerSearchDialog("Blood Group", "Area");
-        }
+            viewpager.setCurrentItem(1);
+        });
+
+//        //TUITION Fragment
+//        if (getSupportFragmentManager().getFragments().get(0).isMenuVisible()) {
+//            showUserCustomerSearchDialog("Subject", "Location");
+//        }
+//
+//        //BLOOD Fragment
+//        if (getSupportFragmentManager().getFragments().get(1).isMenuVisible()) {
+//            showUserCustomerSearchDialog("Blood Group", "Area");
+//        }
     }
 
     private void showUserCustomerSearchDialog(String subject_group_search_text, String location) {
@@ -151,8 +176,17 @@ public class MainActivity extends AppCompatActivity implements MainView {
             String queryText = mSearchArea.getText().toString().trim();
             postSearchQueryEvent(queryText, searchType);
             dialog.hide();
+//            sendToSpecificSearchFragment(searchType);
         });
 
+    }
+
+    private void sendToSpecificSearchFragment(String searchType) {
+        if (searchType.equals("Subject")) {
+            viewpager.setCurrentItem(0);
+        } else if(searchType.equals("Blood Group")){
+            viewpager.setCurrentItem(1);
+        }
     }
 
     @SuppressLint("RestrictedApi")
