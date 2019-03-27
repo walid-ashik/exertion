@@ -24,14 +24,12 @@ import android.widget.Toast;
 import com.appkwan.exertion.R;
 import com.appkwan.exertion.feature.dbhelper.imagehelper.ImageUploader;
 import com.appkwan.exertion.feature.dbhelper.imagehelper.OnImageUploaderListener;
-import com.appkwan.exertion.feature.home.MainActivity;
 import com.appkwan.exertion.feature.home.User;
 import com.appkwan.exertion.feature.message.MessageActivity;
 import com.appkwan.exertion.feature.utitlity.Constant;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 import com.google.firebase.auth.FirebaseAuth;
-import com.hsalf.smilerating.BaseRating;
 import com.hsalf.smilerating.SmileRating;
 
 import java.util.ArrayList;
@@ -86,6 +84,10 @@ public class ProfileActivity extends AppCompatActivity implements ProfileView, O
     TextView mRatingTextView;
     @BindView(R.id.ratingBar)
     RatingBar mRatingBar;
+    @BindView(R.id.mUserTypeImageView)
+    ImageView mUserTypeImageView;
+    @BindView(R.id.constraintLayout)
+    ConstraintLayout constraintLayout;
 
     private List<EditText> mAllEditTexts = new ArrayList<>();
     private List<TextView> mEditButtons = new ArrayList<>();
@@ -176,11 +178,11 @@ public class ProfileActivity extends AppCompatActivity implements ProfileView, O
 
 
     @OnClick(R.id.mRatingTextView)
-    public void onAddRatingTextViewClicked(){
+    public void onAddRatingTextViewClicked() {
 
-        if(mOtherUserId == null){
+        if (mOtherUserId == null) {
             return;
-        }else if(mRatingTextView.getText().toString().equals(getString(R.string.you_ve_rated))){
+        } else if (mRatingTextView.getText().toString().equals(getString(R.string.you_ve_rated))) {
             return;
         }
 
@@ -196,13 +198,13 @@ public class ProfileActivity extends AppCompatActivity implements ProfileView, O
 
         rateButton.setOnClickListener(view -> {
 
-            if(smileRating.getRating() != 0){
+            if (smileRating.getRating() != 0) {
 
                 int rating = smileRating.getRating();
                 mPresenter.setRating(mOtherUserId, rating);
 
                 dialog.hide();
-            }else{
+            } else {
                 Toast.makeText(this, "Please add rating", Toast.LENGTH_SHORT).show();
             }
         });
@@ -262,6 +264,18 @@ public class ProfileActivity extends AppCompatActivity implements ProfileView, O
         mPhoneNumber.setText(user.getPhone());
         mUserCvUrl = user.getCv();
         setShowCvText(mUserCvUrl);
+        changeDesignAccordingToUserType(user.getUserType());
+    }
+
+    private void changeDesignAccordingToUserType(String userType) {
+        if (userType.equals("Student")) {
+            mUserTypeImageView.setBackground(getResources().getDrawable(R.drawable.ic_student_cap));
+            constraintLayout.setBackgroundColor(getResources().getColor(R.color.ic_guardian_bg_color));
+            toolbar.setBackgroundColor(getResources().getColor(R.color.ic_guardian_bg_color));
+        } else {
+            mUserTypeImageView.setBackground(getResources().getDrawable(R.drawable.ic_white_avater));
+            constraintLayout.setBackgroundColor(getResources().getColor(R.color.colorPrimaryDark));
+        }
     }
 
     private void setShowCvText(String mUserCvUrl) {
@@ -292,17 +306,17 @@ public class ProfileActivity extends AppCompatActivity implements ProfileView, O
 
     @Override
     public void onRatingLoaded(double rating, int ratingCount) {
-        Log.e(TAG, "onRatingLoaded: " + rating );
+        Log.e(TAG, "onRatingLoaded: " + rating);
         mRatingBar.setRating((float) rating);
     }
 
     @Override
     public void otherUserRatedThisUser(boolean isOtherUserRated) {
-        if(isOtherUserRated){
+        if (isOtherUserRated) {
             mRatingTextView.setText(getString(R.string.you_ve_rated));
-        }else{
-            Drawable img = getResources().getDrawable( R.drawable.ic_add_black_24dp );
-            mRatingTextView.setCompoundDrawablesWithIntrinsicBounds( img, null, null, null);
+        } else {
+            Drawable img = getResources().getDrawable(R.drawable.ic_add_black_24dp);
+            mRatingTextView.setCompoundDrawablesWithIntrinsicBounds(img, null, null, null);
             mRatingTextView.setText("Add Rating");
         }
     }

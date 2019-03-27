@@ -5,6 +5,7 @@
     <color name="colorAccent">#FF2C13</color>
     <color name="colorLessAccent">#F46B5B</color>
     <color name="colorWhite">#FFFFFF</color>
+    <color name="ic_guardian_bg_color">#1B8366</color>
 
     <color name="colorAccountChoiceCard">#003DDB</color>
     <color name="colorEditTextBG">#DFFFF4</color>
