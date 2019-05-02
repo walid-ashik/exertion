@@ -112,8 +112,7 @@ public class BloodFragment extends Fragment implements BloodView, OnSearchTextLi
     }
 
     private void initRecyclerView(View view) {
-        RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, true);
-        ((LinearLayoutManager) mLayoutManager).setStackFromEnd(true);
+        RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false);
         mBloodRecyclerView.setLayoutManager(mLayoutManager);
         mBloodRecyclerView.setItemAnimator(new DefaultItemAnimator());
     }

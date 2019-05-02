@@ -23,6 +23,7 @@ import com.appkwan.exertion.feature.home.fragments.Post;
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 
+import java.util.Collections;
 import java.util.List;
 
 import butterknife.BindView;
@@ -72,7 +73,7 @@ public class TuitionFragment extends Fragment implements TuitionView, OnSearchTe
     }
 
     @OnClick(R.id.tv_empty_text)
-    public void onReloadButtonClicked(){
+    public void onReloadButtonClicked() {
         mPresenter.getAllTuitionPosts();
     }
 
@@ -86,19 +87,21 @@ public class TuitionFragment extends Fragment implements TuitionView, OnSearchTe
     @Subscribe
     public void onEvent(SearchLocationEvent searchEvent) {
 
-        if(searchEvent.getSearchType().equals("Location")){
-           mPresenter.querySearch("query_location", searchEvent.getSearchText());
-        }else if(searchEvent.getSearchType().equals("Subject")){
+        if (searchEvent.getSearchType().equals("Location")) {
+            mPresenter.querySearch("query_location", searchEvent.getSearchText());
+        } else if (searchEvent.getSearchType().equals("Subject")) {
             mPresenter.querySearch("query_subject", searchEvent.getSearchText());
         }
     }
 
     @Override
     public void onPostLoaded(List<Post> postList) {
-        if(layoutEmpty != null)
-        layoutEmpty.setVisibility(View.GONE);
-        if(mTuitionRecyclerView != null)
-        mTuitionRecyclerView.setVisibility(View.VISIBLE);
+        if (layoutEmpty != null)
+            layoutEmpty.setVisibility(View.GONE);
+        if (mTuitionRecyclerView != null)
+            mTuitionRecyclerView.setVisibility(View.VISIBLE);
+
+        Collections.reverse(postList);
 
         mAdapter = new TuitionAdapter(postList, getContext());
         mTuitionRecyclerView.setAdapter(mAdapter);
@@ -112,8 +115,7 @@ public class TuitionFragment extends Fragment implements TuitionView, OnSearchTe
     }
 
     private void initRecyclerView(View view) {
-        RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, true);
-        ((LinearLayoutManager) mLayoutManager).setStackFromEnd(true);
+        RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false);
         mTuitionRecyclerView.setLayoutManager(mLayoutManager);
         mTuitionRecyclerView.setItemAnimator(new DefaultItemAnimator());
     }

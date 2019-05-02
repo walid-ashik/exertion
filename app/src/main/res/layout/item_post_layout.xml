@@ -96,6 +96,20 @@
             tools:text="A+" />
 
         <TextView
+            android:id="@+id/mUserType"
+            android:layout_width="0dp"
+            
+            android:layout_height="wrap_content"
+            tools:text="Student"
+            android:textColor="#A2A2A2"
+            android:textSize="10sp"
+            android:layout_margin="5dp"
+            android:gravity="end"
+            app:layout_constraintStart_toStartOf="@id/mPostTextVIew"
+            app:layout_constraintBottom_toTopOf="@id/mPostTextVIew"
+            app:layout_constraintEnd_toEndOf="@id/mPostTextVIew"/>
+
+        <TextView
             android:id="@+id/mPostTextVIew"
             android:layout_width="0dp"
             android:layout_height="wrap_content"

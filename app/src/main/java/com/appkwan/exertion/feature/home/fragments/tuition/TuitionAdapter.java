@@ -123,6 +123,8 @@ public class TuitionAdapter extends RecyclerView.Adapter<TuitionAdapter.ViewHold
         LinearLayout mSendButton;
         @BindView(R.id.linearLayout)
         LinearLayout linearLayout;
+        @BindView(R.id.mUserType)
+        TextView mUserType;
 
         public ViewHolder(View itemView) {
             super(itemView);
@@ -147,6 +149,10 @@ public class TuitionAdapter extends RecyclerView.Adapter<TuitionAdapter.ViewHold
                     }
                     if(dataSnapshot.hasChild("profile_image")){
                         setUserImage(dataSnapshot.child("profile_image").getValue().toString());
+                    }
+
+                    if(dataSnapshot.hasChild("userType")){
+                        setUserType(dataSnapshot.child("userType").getValue().toString());
                     }
                 }
 
@@ -199,6 +205,10 @@ public class TuitionAdapter extends RecyclerView.Adapter<TuitionAdapter.ViewHold
 
                         }
                     });
+        }
+
+        public void setUserType(String userType) {
+            mUserType.setText(userType);
         }
     }
 }

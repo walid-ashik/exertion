@@ -119,6 +119,8 @@ public class BloodAdapter extends RecyclerView.Adapter<BloodAdapter.ViewHolder> 
         LinearLayout mSendButton;
         @BindView(R.id.linearLayout)
         LinearLayout linearLayout;
+        @BindView(R.id.mUserType)
+        TextView mUserType;
 
         public ViewHolder(View itemView) {
             super(itemView);
@@ -139,6 +141,10 @@ public class BloodAdapter extends RecyclerView.Adapter<BloodAdapter.ViewHolder> 
                     }
                     if(dataSnapshot.hasChild("profile_image")){
                         setUserImage(dataSnapshot.child("profile_image").getValue().toString());
+                    }
+
+                    if(dataSnapshot.hasChild("userType")){
+                        setUserType(dataSnapshot.child("userType").getValue().toString());
                     }
                 }
 
@@ -191,6 +197,10 @@ public class BloodAdapter extends RecyclerView.Adapter<BloodAdapter.ViewHolder> 
 
                         }
                     });
+        }
+
+        public void setUserType(String userType) {
+            mUserType.setText(userType);
         }
     }
 }

@@ -13,6 +13,7 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -26,6 +27,7 @@ import com.appkwan.exertion.feature.dbhelper.imagehelper.ImageUploader;
 import com.appkwan.exertion.feature.dbhelper.imagehelper.OnImageUploaderListener;
 import com.appkwan.exertion.feature.home.User;
 import com.appkwan.exertion.feature.message.MessageActivity;
+import com.appkwan.exertion.feature.ratinghistory.RatingHistoryActivity;
 import com.appkwan.exertion.feature.utitlity.Constant;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
@@ -96,6 +98,7 @@ public class ProfileActivity extends AppCompatActivity implements ProfileView, O
     private ImageUploader mImageUploader;
 
     private String mUserId, mOtherUserId;
+    private String ratingUserId = "";
 
     private ProgressDialog mProgressDialog;
     private String mUserCvUrl = "";
@@ -111,6 +114,7 @@ public class ProfileActivity extends AppCompatActivity implements ProfileView, O
 
         addAllEditTextInList();
         addEditButtonsInList();
+
         setFocusableFalseEditText();
 
         mProgressDialog = new ProgressDialog(this);
@@ -118,11 +122,13 @@ public class ProfileActivity extends AppCompatActivity implements ProfileView, O
         if (getIntent().getStringExtra(Constant.USER_ID_KEY) == null) {
             //user itself visits this activity, hence show all edit buttons
             mUserId = FirebaseAuth.getInstance().getCurrentUser().getUid();
+            ratingUserId = mUserId;
             mPresenter.getUserDetails(mUserId);
         } else {
             //this is another user in this activity, hence hide edit buttons, show call options to
             //other user
             mOtherUserId = getIntent().getStringExtra(Constant.USER_ID_KEY);
+            ratingUserId = mOtherUserId;
             mPresenter.getUserDetails(mOtherUserId);
             mEditImageView.setVisibility(View.GONE);
             mPresenter.checkIfOtherUserRatedThisPerson(mOtherUserId);
@@ -133,6 +139,11 @@ public class ProfileActivity extends AppCompatActivity implements ProfileView, O
         setToolbar();
         removeRatingSmileName();
         mPresenter.getRating();
+
+        mRatingBar.setOnTouchListener((view, motionEvent) -> {
+            onAddRatingBarClicked();
+            return false;
+        });
     }
 
 
@@ -148,6 +159,12 @@ public class ProfileActivity extends AppCompatActivity implements ProfileView, O
         intent.setType("*/*");
         intent.setAction(Intent.ACTION_GET_CONTENT);
         startActivityForResult(Intent.createChooser(intent, "Select PDF"), Constant.PDF_RQ_KEY);
+    }
+
+    public void onAddRatingBarClicked() {
+        Intent intent = new Intent(this, RatingHistoryActivity.class);
+        intent.putExtra("userId", ratingUserId);
+        startActivity(intent);
     }
 
     public void editButtonClicked(View view) {
